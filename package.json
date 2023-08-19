@@ -1,0 +1,22 @@
+{
+  "name": "metronome",
+  "version": "1.0.0",
+  "description": "OSLABS Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oslabs-beta/metronome.git"
+  },
+  "keywords": [
+    "React"
+  ],
+  "author": "metronome",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oslabs-beta/metronome/issues"
+  },
+  "homepage": "https://github.com/oslabs-beta/metronome#readme"
+}
