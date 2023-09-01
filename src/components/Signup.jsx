@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { registerUser } from '../fetchers/userFetcher';
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
 
@@ -7,10 +8,17 @@ export default function Signup() {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
 	// States for checking the errors
 	const [submitted, setSubmitted] = useState(false);
 	const [error, setError] = useState(false);
+
+    useEffect(()=>{
+        if(submitted){
+            navigate("/")
+        }
+    }, [submitted, navigate])
 
 	// Handling the name change
 	const handleName = (e) => {
@@ -69,43 +77,11 @@ export default function Signup() {
 	};
 
 	return (
-	// 	<div className="form">
-	// 		<div>
-	// 			<h1>User Registration</h1>
-	// 		</div>
 
-	// 		{/* Calling to the methods */}
-	// 		<div className="messages">
-	// 			{errorMessage()}
-	// 			{successMessage()}
-	// 		</div>
-
-	// 		<form>
-	// 			{/* Labels and inputs for form data */}
-	// 			<label className="label">Name</label>
-	// 			<input onChange={handleName} className="input"
-	// 				value={name} type="text" />
-
-	// 			<label className="label">Email</label>
-	// 			<input onChange={handleEmail} className="input"
-	// 				value={email} type="email" />
-
-	// 			<label className="label">Password</label>
-	// 			<input onChange={handlePassword} className="input"
-	// 				value={password} type="password" />
-
-	// 			<button onClick={handleSubmit} className="btn"
-	// 					type="submit">
-	// 				Submit
-	// 			</button>
-	// 		</form>
-	// 	</div>
-
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
 			<div className="sm:mx-auto sm:w-full sm:max-w-sm">
 				<h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-sky-400">User Registration</h1>
 			</div>
-
 			{/* Calling to the methods */}
 			<div className="messages">
 				{errorMessage()}

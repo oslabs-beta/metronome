@@ -1,15 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { loginUser } from '../fetchers/userFetcher';
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
 
 	// States for registration
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
 	// States for checking the errors
 	const [submitted, setSubmitted] = useState(false);
 	const [error, setError] = useState(false);
+
+    useEffect(()=>{
+        if(submitted){
+            navigate("/")
+        }
+    }, [submitted, navigate])
 
 	// Handling the email change
 	const handleEmail = (e) => {
