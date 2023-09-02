@@ -18,45 +18,10 @@ app.post('/api/fileUpload', upload.single('file'), (req, res) => {
       if (!uploadedFile) {
         return res.status(400).json({ error: 'No file uploaded' });
       }
-    //   console.log(uploadedFile.buffer.toString())
       const jsonData = JSON.parse(uploadedFile.buffer.toString());
-      console.log(jsonData)
-      // Assuming you have the JSON data stored in a variable called 'jsonData'
-    //   console.log(jsonData.dataForRoots[0].commitData.updaters);
-  
-  // Extract version information
-//   const reactVersion = jsonData.timelineData[0].reactVersion;
-  
-//   // Extract dataForRoots
-//   const rootComponents = jsonData.dataForRoots;
-  
-//   // Extract componentMeasures
-//   const componentMeasures = jsonData.componentMeasures;
-  
-//   // Calculate total rendering time for each component
-//   const componentRenderTimes = {};
-//   for (const componentId in componentMeasures) {
-//     const componentData = componentMeasures[componentId];
-//     componentRenderTimes[componentId] = calculateTotalRenderTime(componentData);
-//   }
-  
-  // Display human-readable values
-//   console.log(`React Version: ${reactVersion}`);
-  
-//   for (const rootId in rootComponents) {
-//     const rootComponent = rootComponents[rootId];
-//     console.log(`Root Component ${rootId}:`);
-//     console.log(`- Total Render Time: ${rootComponent.totalActualDuration} ms`);
-//     console.log(`- Total Commits: ${rootComponent.commits.length}`);
-//   }
-  
-//   for (const componentId in componentRenderTimes) {
-//     console.log(`Component ${componentId}:`);
-//     console.log(`- Total Render Time: ${componentRenderTimes[componentId]} ms`);
-//   }
-  
-      res.json({ message: 'File uploaded and logged successfully' });
-    } catch (error) {
+      res.json(jsonData);
+      }
+     catch (error) {
       console.error(error);
       res.status(500).json({ error: 'An error occurred' });
     }
