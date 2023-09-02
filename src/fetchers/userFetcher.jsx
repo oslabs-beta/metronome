@@ -2,16 +2,16 @@ import axios from 'axios'
 
 export const loginUser = async (email, password) => {
   try {
-    const res = await axios.post('/api/users/login', { email, password });
+    const res = await axios.post('/api/users/login', { email:email, password:password });
     return res.data;
   } catch (err) {
     console.log(err);
   }
 }
 
-export const registerUser = async (email, password, name) => {
+export const registerUser = async (name, email, password) => {
   try {
-    const res = await axios.post('/api/users/register', { email, password, name });
+    const res = await axios.post('/api/users/register', { name:name, email:email, password:password });
     return res.data;
   } catch (err) {
     console.log(err);

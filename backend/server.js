@@ -1,12 +1,17 @@
 import express from 'express';
 import ViteExpress from 'vite-express';
 import multer from 'multer';
-
+import cors from 'cors';
+import cookieParser from 'cookie-parser'
 import {db, dbEmitter} from '../backend/db/sqlmodel.js';
 
 import userController from './controller/userController.js';
 
 const app = express();
+app.use(express.urlencoded({ extended: true }));
+app.use(cors({ credentials: true, origin: true }));
+app.use(express.json());
+app.use(cookieParser());
 // Set up storage for uploaded files
 const storage = multer.memoryStorage(); // Store the file in memory
 const upload = multer({ storage });
