@@ -16,10 +16,10 @@ function App() {
   useEffect(() => {
     const checkUserSession = async () => {
       try {
+        setIsLoading(true);
         const res = await checkSession();
         if (res) {
           setIsLoggedIn(true);
-          setIsLoading(false);
         }
       } catch (err) {
         console.log(err);
