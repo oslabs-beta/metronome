@@ -71,4 +71,4 @@ dbEmitter.on("dbConnected", () => {
     return componentData.reduce((totalTime, measure) => totalTime + measure.duration, 0);
   }
 
-ViteExpress.listen(app, 3000, () => console.log("Server is listening..."));
+ViteExpress.listen(app, 3000, () => console.log("Server is listening...")); 
