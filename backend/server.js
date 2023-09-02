@@ -23,7 +23,7 @@ app.use(session({
 }));
 
 app.use(passport.initalize());
-
+app.use(passport.session());
 app.get('/auth/google',
   passport.authenticate('google', { scope:
       [ 'email', 'profile' ] }
@@ -44,6 +44,12 @@ app.get('/auth/protected',isLoggedIn, (req,res)=> {
 
   res.send(`Hello ${name}`);
 }); 
+
+//logout route
+app.use('/auth/logout', (req,res) => {
+  req.session.destroy();
+  res.send("See you again!");
+})
 //end of added code
 
 
