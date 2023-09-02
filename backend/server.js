@@ -4,6 +4,8 @@ import multer from 'multer';
 
 import {db, dbEmitter} from '../backend/db/sqlmodel.js';
 
+import userController from './controller/userController.js';
+
 const app = express();
 // Set up storage for uploaded files
 const storage = multer.memoryStorage(); // Store the file in memory
@@ -27,13 +29,16 @@ app.post('/api/fileUpload', upload.single('file'), (req, res) => {
     }
   });
 
+  app.post('/api/users/register', userController.createUser, (req, res) =>{
+    res.json('created user');
+  });
+
+  app.get('/api/users/login', userController.getUser, (req, res)=>{
+    res.json('logged in');
+  });
+
 dbEmitter.on("dbConnected", () => {
     console.log("Server is listening...");
   });
-
-  // Function to calculate the total rendering time for a component
-  function calculateTotalRenderTime(componentData) {
-    return componentData.reduce((totalTime, measure) => totalTime + measure.duration, 0);
-  }
 
 ViteExpress.listen(app, 3000, () => console.log("Server is listening..."));
