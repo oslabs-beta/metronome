@@ -3,7 +3,7 @@ import ViteExpress from 'vite-express';
 import multer from 'multer';
 
 import {db, dbEmitter} from '../backend/db/sqlmodel.js';
-
+import dataController from '../backend/controller/dataController.js';
 const app = express();
 // Set up storage for uploaded files
 const storage = multer.memoryStorage(); // Store the file in memory
@@ -11,7 +11,7 @@ const upload = multer({ storage });
 
 app.get("/message", (_, res) => res.send("Hello from express!"));
 
-app.post('/api/fileUpload', upload.single('file'), (req, res) => {
+app.post('/api/fileUpload', upload.single('file'), dataController.getJsonFile, (req, res) => {
     try {
       const uploadedFile = req.file;
   
