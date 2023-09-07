@@ -9,23 +9,31 @@ const app = express();
 const storage = multer.memoryStorage(); // Store the file in memory
 const upload = multer({ storage });
 
+app.use(express.json());
 app.get("/message", (_, res) => res.send("Hello from express!"));
 
 app.post('/api/fileUpload', upload.single('file'), dataController.getJsonFile, (req, res) => {
-    try {
-      const uploadedFile = req.file;
+    // try {
+    //   const uploadedFile = req.file;
   
-      if (!uploadedFile) {
-        return res.status(400).json({ error: 'No file uploaded' });
-      }
-      const jsonData = JSON.parse(uploadedFile.buffer.toString());
-      res.json(jsonData);
-      }
-     catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'An error occurred' });
-    }
+    //   if (!uploadedFile) {
+    //     return res.status(400).json({ error: 'No file uploaded' });
+    //   }
+    //   const jsonData = JSON.parse(uploadedFile.buffer.toString());
+    //   res.json(jsonData);
+    //   }
+    //  catch (error) {
+    //   console.error(error);
+    //   res.status(500).json({ error: 'An error occurred' });
+    // }
+    console.log(res.locals.JsonFile);
+
+  return res.status(200).json(res.locals.JsonFile);
+
   });
+
+  //get overview data which are res.locals.version and totalRender
+  app.post('/api/dashboard/overview',dataController.getJsonFile)
 
 dbEmitter.on("dbConnected", () => {
     console.log("Server is listening...");
