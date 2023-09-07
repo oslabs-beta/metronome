@@ -1,6 +1,7 @@
 import express from 'express';
 import ViteExpress from 'vite-express';
 import multer from 'multer';
+import dataController from './controller/dataController';
 
 import {db, dbEmitter} from '../backend/db/sqlmodel.js';
 import dataController from '../backend/controller/dataController.js';
@@ -11,7 +12,11 @@ const upload = multer({ storage });
 
 app.get("/message", (_, res) => res.send("Hello from express!"));
 
-app.post('/api/fileUpload', upload.single('file'), dataController.getJsonFile, (req, res) => {
+
+app.get('/api/metrics'); // TODO
+
+app.post('/api/fileUpload', upload.single('file'), (req, res) => {
+
     try {
       const uploadedFile = req.file;
   
