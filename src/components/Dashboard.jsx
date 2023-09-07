@@ -1,31 +1,51 @@
-import React from 'react';
-import BarChart from './BarChart.jsx';
-import FileUpload from './FileUpload.jsx';
-import HistoricalChart from './HistoricalChart.jsx';
-import Navbar from './Navbar.jsx';
-import Overview from './Overview.jsx';
-import PieChart from './PieChart.jsx';
-import Tree from './Tree.jsx';
 
-function Dashboard() {
-  
-//declare overview state
-const [overview, setOverview] = useState({});
+import React, { useEffect, useState } from 'react';
+import OverviewChart from './OverviewChart';
+import PieChart from './PieChart';
+import BarChart from './BarChart';
 
-useEffect(()=>{
-  const fetchOverview=async()=>{
-    try{
-      const response = await fetch("http://localhost:3000/api/dashboard/overview")
-      const jsonData=await response.json();
+const Dashboard = () => {
+  // set up variable in which to store the metrics retrieved
+  // from the database
+  const [metrics, setMetrics] = useState(null);
+  const [barChartData, setBarChartData] = useState(null); // data to populate bar chart with
+  const [overviewChartData, setOverviewChartData] = useState(null); // data to populate overview chart with
+  const [pieChartData, setPieChartData] = useState(null); // data to populate pie chart with
 
-      setOverview({jsonData});
-    }
-  }
-})
+  // parse through metrics and pull data relevant to bar chart
+  const parseBarChartData = (metrics) => {
+    return data;
+  };
+
+  // parse through metrics and pull data relevant to overview chart
+  const parseOverviewChartData = (metrics) => {
+    return data;
+  };
+
+  // parse through metrics and pull data relevant to pie chart
+  const parsePieChartData = (metrics) => {
+    return data;
+  }; 
+
+  // fetch data from database for display on dashboard
+  useEffect(() => {
+    fetch('/api/metrics')
+    .then((data) => data.json())
+    .then((jsonData) => {
+        setMetrics(jsonData);
+        setBarChartData(parseBarChartData(metrics));
+        setOverviewChartData(parseOverviewChartData(metrics));
+        setPieChartData(parsePieChartData(metrics));
+    });
+  }, []);
 
   return (
-    <div>Dashboard</div>
-  )
+    <>
+      <BarChart data={barChartData} />
+      <OverviewChart data={overviewChartData} />
+      <PieChart data={pieChartData} />
+    </>
+  );
 }
 
-export default Dashboard
+export default Dashboard;
