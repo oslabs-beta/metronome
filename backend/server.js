@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser'
 import {db, dbEmitter} from '../backend/db/sqlmodel.js';
 
 import userController from './controller/userController.js';
+import cookieController from './controller/cookieController.js';
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -38,9 +39,13 @@ app.post('/api/fileUpload', upload.single('file'), (req, res) => {
     res.json('created user');
   });
 
-  app.get('/api/users/login', userController.getUser, (req, res)=>{
-    res.json('logged in');
+  app.post('/api/users/login', userController.getUser, cookieController.setCookie, (req, res)=>{
+    res.json('logged in and cookie set');
   });
+
+  app.get('api/check-session', cookieController.verifyCookie, (req, res) =>{
+    res.status(200).send("ok");
+  })
 
 dbEmitter.on("dbConnected", () => {
     console.log("Server is listening...");

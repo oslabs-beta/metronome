@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { loginUser } from '../fetchers/userFetcher';
+import { loginUser, checkSession } from '../fetchers/userFetcher';
 import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
 
 	// States for registration
+	const [isLoggedIn, setIsLoggedIn] = useState(false)
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -14,10 +15,21 @@ export default function Signup() {
 	const [error, setError] = useState(false);
 
     useEffect(()=>{
-        if(submitted){
+		const checkUserSession = async () => {
+		try {
+			const res = await checkSession();
+			if (res) {
+			setIsLoggedIn(true);
+			}
+			} catch (err) {
+			console.log(err);
+			}
+		};
+		checkUserSession();
+        if(submitted || isLoggedIn){
             navigate("/")
         }
-    }, [submitted, navigate])
+    }, [submitted, navigate, isLoggedIn])
 
 	// Handling the email change
 	const handleEmail = (e) => {
@@ -32,12 +44,12 @@ export default function Signup() {
 	};
 
 	// Handling the form submission
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (email === '' || password === '') {
 			setError(true);
 		} else {
-            loginUser({email, password})
+           await loginUser({email, password})
 			setSubmitted(true);
 			setError(false);
 		}

@@ -16,7 +16,7 @@ export default function Signup() {
 
     useEffect(()=>{
         if(submitted){
-            navigate("/")
+            navigate("/login")
         }
     }, [submitted, navigate])
 
