@@ -1,10 +1,10 @@
 import express from 'express';
 import ViteExpress from 'vite-express';
 import multer from 'multer';
-import dataController from './controller/dataController';
+import dataController from './controller/dataController.js';
 
 import {db, dbEmitter} from '../backend/db/sqlmodel.js';
-import dataController from '../backend/controller/dataController.js';
+
 const app = express();
 // Set up storage for uploaded files
 const storage = multer.memoryStorage(); // Store the file in memory
@@ -13,7 +13,11 @@ const upload = multer({ storage });
 app.use(express.json());
 app.get("/message", (_, res) => res.send("Hello from express!"));
 
-app.get('/api/metrics'); // TODO
+app.get('/api/dashboard/metrics', dataController.getMetrics,(req,res)=>{
+  console.log(res.locals.metricsData,'i am in the server')
+  return res.status(200).json(res.locals.metricsData);
+}); // TODO
+
 app.post('/api/fileUpload', upload.single('file'), dataController.getJsonFile, (req, res) => {
     // try {
     //   const uploadedFile = req.file
@@ -27,14 +31,12 @@ app.post('/api/fileUpload', upload.single('file'), dataController.getJsonFile, (
     //   console.error(error);
     //   res.status(500).json({ error: 'An error occurred' });
     // }
-    console.log(res.locals.JsonFile);
-
+// console.log(res.locals.JsonFile,'i am in server.js fileupload');
   return res.status(200).json(res.locals.JsonFile);
 
   });
 
   //get overview data which are res.locals.version and totalRender
-  app.post('/api/dashboard/overview',dataController.getJsonFile)
 
 dbEmitter.on("dbConnected", () => {
     console.log("Server is listening...");
