@@ -1,5 +1,4 @@
 import { ChangeEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 function FileUpload() {
   const [file, setFile] = useState(null);
@@ -31,7 +30,6 @@ function FileUpload() {
       .catch((err) => console.error(err));
   };
 
-  if(isLoggedIn){
   return (
     <div>
        <form encType="multipart/form-data">
@@ -43,10 +41,6 @@ function FileUpload() {
       </form> 
     </div>
   );
-  }
-  else{
-    <Link to={"/login"}><div>Please login before trying to access this site</div></Link>
-  }
 }
 
 export default FileUpload;
