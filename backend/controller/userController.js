@@ -1,4 +1,6 @@
 import {db} from '../../backend/db/sqlmodel.js'
+import bcrypt from 'bcrypt';
+const saltRounds = 10;
 
 const userController = {
     // Create a new user in the Database
@@ -13,9 +15,12 @@ const userController = {
         // return res.status(400).json({ error: 'Did not receive first name and/or last name'});
         return next({err : "Error ccreating a new user, missing first name, last name, email, or password"}) ;
         // add DB LOGIC HERE
-        const result =  await db.query(queryStr);
-        console.log("added to database", result);
-        return next();
+        bcrypt.hash(password, saltRounds, async function(err, hash) {
+          const queryStr = `INSERT INTO users (username, password) VALUES ('${email}','${hash}');`;
+          const result =  await db.query(queryStr);
+          console.log("added to database", result);
+          return next();
+        });
     },
 
     async getUser(req, res, next) {
@@ -23,20 +28,30 @@ const userController = {
         const { email, password } = req.body;
         if (!email || !password) return next({err: 'incorrect credentials'});
         //need to verify how models work in SQL
-        const queryStr = `SELECT * FROM users WHERE username = '${email}' AND password = '${password}';`;
+        // const queryStr = `SELECT * FROM users WHERE username = '${email}' AND password = '${password}';`;
+        const queryStr = `SELECT * FROM users WHERE username = '${email}';`;
         console.log(queryStr);
         const result = await db.query(queryStr);
-        console.log('this are the username and passwords', result);
+        console.log('this is the stored password', result);
         console.log(result.rows[0])
         if(result.rows[0]){
-          console.log('user found in databes, logging in')
-          res.locals.user = result.rows[0]
-          return next();
+          const hash = result.rows[0].password
+          console.log('user found in database, verifying password')
+          bcrypt.compare(password, hash, function(err, match){
+            if (match){
+              console.log('passwords match')
+              res.locals.user = result.rows[0]
+              return next();
+            }
+            else{
+              console.log("Incorrect user or password");
+              throw new Error('could not match with database')
+            }
+          })
         }
         else{
           console.log("Incorrect user or password");
           throw new Error('could not match with database')
-          
         }
         
         // User.findOne({ email: email, password: password })
