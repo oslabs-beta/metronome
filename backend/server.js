@@ -2,10 +2,18 @@ import express from 'express';
 import ViteExpress from 'vite-express';
 import multer from 'multer';
 import dataController from './controller/dataController.js';
-
+import cors from 'cors';
+import cookieParser from 'cookie-parser'
 import {db, dbEmitter} from '../backend/db/sqlmodel.js';
 
+import userController from './controller/userController.js';
+import cookieController from './controller/cookieController.js';
+
 const app = express();
+app.use(express.urlencoded({ extended: true }));
+app.use(cors({ credentials: true, origin: true }));
+app.use(express.json());
+app.use(cookieParser());
 // Set up storage for uploaded files
 const storage = multer.memoryStorage(); // Store the file in memory
 const upload = multer({ storage });
@@ -36,15 +44,20 @@ app.post('/api/fileUpload', upload.single('file'), dataController.getJsonFile, (
 
   });
 
-  //get overview data which are res.locals.version and totalRender
+  app.post('/api/users/register', userController.createUser, (req, res) =>{
+    res.json('created user');
+  });
+
+  app.post('/api/users/login', userController.getUser, cookieController.setCookie, (req, res)=>{
+    res.json('logged in and cookie set');
+  });
+
+  app.get('api/check-session', cookieController.verifyCookie, (req, res) =>{
+    res.status(200).send("ok");
+  })
 
 dbEmitter.on("dbConnected", () => {
     console.log("Server is listening...");
   });
 
-  // Function to calculate the total rendering time for a component
-  function calculateTotalRenderTime(componentData) {
-    return componentData.reduce((totalTime, measure) => totalTime + measure.duration, 0);
-  }
-
-ViteExpress.listen(app, 3000, () => console.log("Server is listening...")); 
+ViteExpress.listen(app, 3000, () => console.log("Server is listening..."));
