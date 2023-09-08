@@ -41,10 +41,10 @@ function App() {
         <BrowserRouter>
           <Routes>
             {/* {isLoggedIn ?  <Route exact path ="/" element={<FileUpload />}></Route> : <Route path="/" element={<Login />}></Route> } */}
-            <Route exact path ="/" element={<FileUpload />}></Route>
-            <Route path="/signup" element={<Signup />}></Route>
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/dashboard" element={<Dashboard />}></Route>
+            <Route exact path ="/" element={<FileUpload />}/>
+            <Route path="/signup" element={<Signup />}/>
+            <Route path="/login" element={<Login />}/>
+            <Route path="/dashboard" element={<Dashboard />}/>
             {/* <Route path="/about" element={<About />}></Route> */}
             {/* <Route path="/doccal" element={<DoctorCalendar />}></Route> */}
             {/* <Route path="/patientcal" element={<PatientCalendar />}></Route> */}
