@@ -1,6 +1,10 @@
 import { ChangeEvent, useState } from 'react';
 
+import { useNavigate } from "react-router-dom";
+
+
 function FileUpload() {
+  const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const handleFileChange = (e)  => {
     if (e.target.files) {
@@ -9,14 +13,15 @@ function FileUpload() {
     }
   };
 
-  const handleUploadClick = () => {
+  const handleUploadClick = (e) => {
+    e.preventDefault();
     if (!file) {
       return;
     }
     const formData = new FormData()
     formData.append('file', file)
     // 👇 Uploading the file using the fetch API to the server
-    console.log(formData)
+    // console.log(formData)
     fetch('/api/fileUpload', {
       method: 'POST',
       body: formData, // Convert the file data to JSON string
@@ -26,7 +31,8 @@ function FileUpload() {
     //   },
     })
       .then((res) => res.json())
-      .then((data) => console.log(data))
+      .then((data) => {console.log(data,'this is in fileupload.jsx')
+      navigate("/dashboard")})
       .catch((err) => console.error(err));
   };
 
@@ -37,7 +43,7 @@ function FileUpload() {
 
       <div>{file && `${file.name} - ${file.type}`}</div>
 
-      <input type='submit' onClick={handleUploadClick}/>
+      <input type='submit' onClick={e=>handleUploadClick(e)}/>
       </form> 
     </div>
   );
