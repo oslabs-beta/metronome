@@ -7,6 +7,7 @@ const Overview=({data})=>{
     const[totalTime, setTotalTime]=useState(null);
 
     useEffect(()=>{
+        console.log(data);
         const overviewData = async()=>{
             try{
                 setVersion(data.version);
@@ -17,7 +18,7 @@ const Overview=({data})=>{
             }
         }
         overviewData();
-    },[])
+    },[data])
     return(
         <div className='Overview'>
             <p>React Version: {version}</p>
