@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 //import css file
 
-const Overview=()=>{
+const Overview=(metrics)=>{
     
     return(
         <div className='Overview'>
