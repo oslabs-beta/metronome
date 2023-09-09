@@ -48,7 +48,7 @@ app.post('/api/fileUpload', upload.single('file'), dataController.getJsonFile, (
     res.json('created user');
   });
 
-  app.post('/api/users/login', userController.getUser, cookieController.setCookie, (req, res)=>{
+  app.post('/api/users/login', userController.getUser, (req, res)=>{
     res.json('logged in and cookie set');
   });
 

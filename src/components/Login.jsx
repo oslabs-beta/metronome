@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { loginUser, checkSession } from '../fetchers/userFetcher';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import Signup from './Signup';
 
-export default function Signup() {
+export default function Login() {
 
 	// States for registration
 	const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -15,19 +16,19 @@ export default function Signup() {
 	const [error, setError] = useState(false);
 
     useEffect(()=>{
-		const checkUserSession = async () => {
-		try {
-			const res = await checkSession();
-			if (res) {
-			setIsLoggedIn(true);
-			}
-			} catch (err) {
-			console.log(err);
-			}
-		};
-		checkUserSession();
+		// const checkUserSession = async () => {
+		// try {
+		// 	const res = await checkSession();
+		// 	if (res) {
+		// 	setIsLoggedIn(true);
+		// 	}
+		// 	} catch (err) {
+		// 	console.log(err);
+		// 	}
+		// };
+		// checkUserSession();
         if(submitted || isLoggedIn){
-            navigate("/")
+            navigate("/fileupload")
         }
     }, [submitted, navigate, isLoggedIn])
 
@@ -125,7 +126,7 @@ export default function Signup() {
 			</form> 
             <p className="mt-10 text-center text-sm text-gray-500">
                 Not a member?
-                <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Register here!</a>
+				<Link to={'/signup'} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Register here!</Link>
             </p>
         </div>
 	</div>

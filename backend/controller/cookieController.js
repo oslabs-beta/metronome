@@ -6,7 +6,7 @@ app.use(cookieParser()); // Use the cookie-parser middleware
 const cookieController = {
     setCookie (req, res, next) {
         console.log('received user data:' , res.locals.user)
-        res.cookie('id', res.locals.user.id)
+        res.cookie('id', res.locals.user.password)
         console.log('Cookies: ', res._headers["set-cookie"]);
         return next();
     },
