@@ -56,6 +56,11 @@ app.post('/api/fileUpload', upload.single('file'), dataController.getJsonFile, (
     res.status(200).send("ok");
   })
 
+  app.post('/extensiondata',(req,res)=>{
+    console.log('testing from extension', req.body);
+    res.status(200).send('ok');
+  })
+
 dbEmitter.on("dbConnected", () => {
     console.log("Server is listening...");
   });

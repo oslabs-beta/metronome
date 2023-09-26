@@ -1,6 +1,7 @@
-import * as React from "react";
+import React, {useState , useEffect} from "react";
 import Tree from "react-d3-tree";
 import "../components/ComponentTree.css";
+// import xhr from '../background/background'
 
 function ComponentTree({ fiberTree }) {
   console.log(fiberTree);
@@ -48,7 +49,23 @@ function ComponentTree({ fiberTree }) {
     }
   };
 
-  const result = parseTree(fiberTree[0]);
+  const result= parseTree(fiberTree[0]);
+    const sendData = (result) =>{
+    fetch("http://localhost:3000/extensiondata", {
+      method: 'POST',
+      mode: 'no-cors',
+      cache: 'no-cache',
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify(result)
+  }).then(function(response) {
+      // check the response object for result
+      console.log('response from backend', response)
+      // ...
+  });
+  }
+
 
   console.log("parsed component tree", parseTree(fiberTree[0]));
 
@@ -80,4 +97,4 @@ function ComponentTree({ fiberTree }) {
   );
 }
 
-export default ComponentTree;
+export default ComponentTree
