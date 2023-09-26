@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Metronome",
+  "description": "React Visualizer Extension",
+  "version": "1.0.0",
+  "devtools_page": "devtools.html",
+  "icons": {
+    "16": "metronome.png",
+    "48": "metronome.png",
+    "128": "metronome.png"
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://localhost/*"],
+      "js": ["contentScript.js"]
+    }
+  ],
+  "permissions": ["tabs", "activeTab", "scripting"],
+  "host_permissions": ["http://localhost/*"],
+  "web_accessible_resources": [
+    {
+      "resources": ["inject.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
