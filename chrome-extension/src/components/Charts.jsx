@@ -1,11 +1,12 @@
 import * as React from "react";
+import BarChart from './BarChart';
 
-const Charts = () =>{
-    return(
+const Charts = () => {
+    return (
         <div>
-            <p>i am charts</p>
+            <BarChart />
         </div>
-    )
+    );
 }
 
 export default Charts;
