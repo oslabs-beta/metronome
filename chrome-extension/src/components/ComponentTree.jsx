@@ -2,6 +2,7 @@ import * as React from "react";
 import Tree from "react-d3-tree";
 import "../components/ComponentTree.css";
 
+//fiberTree is passed down from App
 function ComponentTree({ fiberTree }) {
   console.log(fiberTree);
 
