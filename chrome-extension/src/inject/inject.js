@@ -6,20 +6,44 @@ const reactDevGlobalHook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
 const eventList = [];
 
 // FUNCTION: FOR PARSING REACT FIBER TREE
+// const parseTree = (reactFiberTree) => {
+//   if (reactFiberTree === null) return null;
+//   else if (typeof reactFiberTree.elementType === "function") {
+//     const elemObj = {
+//       name: reactFiberTree.elementType.name,
+//       actualDuration: reactFiberTree.actualDuration,
+//       selfBaseDuration: reactFiberTree.selfBaseDuration,
+//       child: parseTree(reactFiberTree.child),
+//       sibling: parseTree(reactFiberTree.sibling),
+//     };
+//     return elemObj;
+//   } else {
+//     return parseTree(reactFiberTree.child) || parseTree(reactFiberTree.sibling);
+//   }
+// };
+
 const parseTree = (reactFiberTree) => {
-  if (reactFiberTree === null) return null;
-  else if (typeof reactFiberTree.elementType === "function") {
-    const elemObj = {
+  if (!reactFiberTree) return null;
+
+  if (typeof reactFiberTree.elementType === "function") {
+    return {
       name: reactFiberTree.elementType.name,
       actualDuration: reactFiberTree.actualDuration,
       selfBaseDuration: reactFiberTree.selfBaseDuration,
       child: parseTree(reactFiberTree.child),
-      sibling: parseTree(reactFiberTree.sibling),
+      sibling: parseTree(reactFiberTree.sibling)
     };
-    return elemObj;
-  } else {
-    return parseTree(reactFiberTree.child) || parseTree(reactFiberTree.sibling);
   }
+
+  const children = [];
+
+  let currentNode = reactFiberTree.child;
+  while (currentNode) {
+    children.push(parseTree(currentNode));
+    currentNode = currentNode.sibling;
+  }
+
+  return children.length ? children : null;
 };
 
 // FUNCTION: CREATING CUSTOMIZED ONCOMMITFIBER ROOT FUNCTION
