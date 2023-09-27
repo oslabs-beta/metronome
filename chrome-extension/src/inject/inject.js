@@ -30,6 +30,7 @@ const customOnCommitFiberRoot = (onCommitFiberRoot) => {
       "INJECT.JS: FIBER ROOT FROM THE CUSTOM ONCOMMITFIBERROOT",
       fiberRoot
     );
+    console.log("this is the unparsed tree", fiberRoot.current);
     eventList.push(parseTree(fiberRoot.current));
     const eventListStr = JSON.stringify(eventList[eventList.length - 1]);
 
