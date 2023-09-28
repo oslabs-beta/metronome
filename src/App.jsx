@@ -3,6 +3,7 @@ import {BrowserRouter, Routes, Route } from "react-router-dom"
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
+import Logout from "./components/Logout";
 import { checkSession } from "./fetchers/userFetcher";
 import FileUpload from "./components/FileUpload";
 
@@ -45,10 +46,11 @@ function App() {
               <Route path ="/fileupload" element={<FileUpload/>}></Route>
               <Route path="/dashboard" element={<Dashboard />}></Route>
             </Routes>
+            <Logout/>
           </BrowserRouter>
-        </header>
+          </header>
       </div>
-    );
+   );
   }
 
 export default App;
