@@ -3,6 +3,7 @@ import Tree from "react-d3-tree";
 import "../components/ComponentTree.css";
 // import xhr from '../background/background'
 
+//fiberTree is passed down from App
 function ComponentTree({ fiberTree }) {
   console.log(fiberTree);
 

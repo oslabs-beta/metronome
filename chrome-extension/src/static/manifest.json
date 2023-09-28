@@ -11,7 +11,7 @@
   },
   "options_page": "options.html",
   "background": {
-    "service_worker": "background.js"
+    "service-worker": "background.js"
   },
   "content_scripts": [
     {
