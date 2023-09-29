@@ -12,7 +12,7 @@ dataController.getJsonFile = async (req, res, next)=>{
     // upload.single('file');
     console.log('i am in dataController.getJsonFile');
     try{
-        // console.log(req.file,'i am req.file');
+        // cosole.log(req.file,'i am req.file');
         const uploadedFile = req.file;
         if(!uploadedFile){
             return res.status(400).json({error:"No file uploaded"});
