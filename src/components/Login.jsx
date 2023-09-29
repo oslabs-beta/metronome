@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { loginUser } from '../fetchers/userFetcher';
-import { useNavigate } from "react-router-dom";
+import { loginUser, checkSession } from '../fetchers/userFetcher';
+import { useNavigate, Link } from "react-router-dom";
+import Signup from './Signup';
 
-export default function Signup() {
+export default function Login() {
 
 	// States for registration
+	const [isLoggedIn, setIsLoggedIn] = useState(false)
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -13,11 +15,27 @@ export default function Signup() {
 	const [submitted, setSubmitted] = useState(false);
 	const [error, setError] = useState(false);
 
-    useEffect(()=>{
-        if(submitted){
-            navigate("/")
-        }
-    }, [submitted, navigate])
+     useEffect(()=>{
+		// const checkUserSession = async () => {
+		// try {
+		// 	const res = await checkSession();
+		// 	if (res) {
+		// 	setIsLoggedIn(true);
+		// 	}
+		// 	} catch (err) {
+		// 	console.log(err);
+		// 	}
+		// };
+		// checkUserSession();
+        checkSession()
+		.then((res)=>{
+			console.log('this is result from checksession',res)
+			if(res.id){
+				setIsLoggedIn(true)
+				navigate("/dashboard")
+			}
+		})
+    }, [submitted ,navigate, isLoggedIn])
 
 	// Handling the email change
 	const handleEmail = (e) => {
@@ -32,12 +50,12 @@ export default function Signup() {
 	};
 
 	// Handling the form submission
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (email === '' || password === '') {
 			setError(true);
 		} else {
-            loginUser({email, password})
+           await loginUser({email, password})
 			setSubmitted(true);
 			setError(false);
 		}
@@ -51,7 +69,7 @@ export default function Signup() {
 				style={{
 					display: submitted ? '' : 'none',
 				}}>
-				<h1>User {name} successfully registered!!</h1>
+				<h1>User {name} logged in!!</h1>
 			</div>
 		);
 	};
@@ -113,14 +131,12 @@ export default function Signup() {
 			</form> 
             <p className="mt-10 text-center text-sm text-gray-500">
                 Not a member?
-                <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Register here!</a>
+				<Link to={'/signup'} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Register here!</Link>
             </p>
 			<p className="mt-10 text-center text-sm text-gray-500">
 			<a href='/auth/google'>Authenticate With Google</a>
 			</p>
         </div>
 	</div>
-
-
 	);
 }

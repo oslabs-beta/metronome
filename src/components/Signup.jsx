@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { registerUser } from '../fetchers/userFetcher';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Signup() {
 
@@ -44,7 +44,7 @@ export default function Signup() {
 		if (name === '' || email === '' || password === '') {
 			setError(true);
 		} else {
-            registerUser({name, email, password})
+            registerUser(name, email, password)
 			setSubmitted(true);
 			setError(false);
 		}
@@ -116,9 +116,6 @@ export default function Signup() {
                 <div className="flex items-center justify-between">
 				<label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">Password</label>
                 <div className="text-sm">
-                <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                    Forgot password?
-                  </a>
                 </div>
               </div>
               <div className="mt-2">
@@ -136,7 +133,7 @@ export default function Signup() {
 			</form> 
             <p className="mt-10 text-center text-sm text-gray-500">
                 Already a member?
-                <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Login now</a>
+                <Link to={'/'} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Login now!</Link>
             </p>
         </div>
 	</div>
