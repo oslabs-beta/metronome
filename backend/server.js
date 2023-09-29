@@ -34,12 +34,12 @@ app.post('/api/fileUpload', upload.single('file'), dataController.getJsonFile, (
     res.json('created user');
   });
 
-  app.post('/api/users/login', userController.getUser, (req, res)=>{
-    res.json('logged in and cookie set');
+  app.post('/api/users/login', userController.getUser, cookieController.setCookie, (req, res)=>{
+    res.status(200).json(req.cookies);
   });
 
-  app.get('api/check-session', cookieController.verifyCookie, (req, res) =>{
-    res.status(200).send("ok");
+  app.get('/api/check-session', cookieController.verifyCookie, (req, res) =>{
+    res.status(200).json(req.cookies);
   })
 
   app.post('/saveData',(req,res)=>{

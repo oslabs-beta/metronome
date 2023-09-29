@@ -15,7 +15,7 @@ export default function Login() {
 	const [submitted, setSubmitted] = useState(false);
 	const [error, setError] = useState(false);
 
-    useEffect(()=>{
+     useEffect(()=>{
 		// const checkUserSession = async () => {
 		// try {
 		// 	const res = await checkSession();
@@ -27,10 +27,15 @@ export default function Login() {
 		// 	}
 		// };
 		// checkUserSession();
-        if(submitted || isLoggedIn){
-            navigate("/fileupload")
-        }
-    }, [submitted, navigate, isLoggedIn])
+        checkSession()
+		.then((res)=>{
+			console.log('this is result from checksession',res)
+			if(res.id){
+				setIsLoggedIn(true)
+				navigate("/dashboard")
+			}
+		})
+    }, [submitted ,navigate, isLoggedIn])
 
 	// Handling the email change
 	const handleEmail = (e) => {
@@ -64,7 +69,7 @@ export default function Login() {
 				style={{
 					display: submitted ? '' : 'none',
 				}}>
-				<h1>User {name} successfully registered!!</h1>
+				<h1>User {name} logged in!!</h1>
 			</div>
 		);
 	};
@@ -130,7 +135,5 @@ export default function Login() {
             </p>
         </div>
 	</div>
-
-
 	);
 }
