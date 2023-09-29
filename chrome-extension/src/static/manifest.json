@@ -20,7 +20,7 @@
     }
   ],
   "permissions": ["tabs", "activeTab", "scripting"],
-  "host_permissions": ["http://localhost/*"],
+  "host_permissions": ["http://localhost:3000/*"],
   "web_accessible_resources": [
     {
       "resources": ["inject.js"],

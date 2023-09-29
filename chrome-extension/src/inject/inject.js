@@ -4,12 +4,11 @@ const reactDevGlobalHook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
 // STORE THE PARSED FIBER TREE INFORMATION
 // EACH ELEMENT WILL REPRESENT ONE RERENDER THAT OCCURED
 const eventList = [];
-
 // FUNCTION: FOR PARSING REACT FIBER TREE
 const parseTree = (reactFiberTree) => {
   if (reactFiberTree === null) return null;
   else if (typeof reactFiberTree.elementType === "function") {
-    const elemObj = {
+      const elemObj = {
       name: reactFiberTree.elementType.name,
       actualDuration: reactFiberTree.actualDuration,
       selfBaseDuration: reactFiberTree.selfBaseDuration,
@@ -50,3 +49,4 @@ reactDevGlobalHook.onCommitFiberRoot = customOnCommitFiberRoot(
 );
 
 // REACT DEV TOOL GLOBAL HOOK
+
