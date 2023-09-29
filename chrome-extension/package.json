@@ -27,6 +27,7 @@
     "webpack-merge": "^5.9.0"
   },
   "dependencies": {
+    "react-apexcharts": "^1.4.1",
     "react-d3-tree": "^3.6.1"
   }
 }
