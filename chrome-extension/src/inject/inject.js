@@ -6,7 +6,6 @@ const reactDevGlobalHook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
 // STORE THE PARSED FIBER TREE INFORMATION
 // EACH ELEMENT WILL REPRESENT ONE RERENDER THAT OCCURED
 const eventList = [];
-
 // FUNCTION: FOR PARSING REACT FIBER TREE
 const parseTree = (reactFiberTree) => {
   if (reactFiberTree === null) return null;

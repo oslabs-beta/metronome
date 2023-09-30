@@ -1,16 +1,45 @@
-* {
-  padding: 0;
-  margin: 0;
-}
 
-body {
-  /* background-color: red; */
-  min-height: 100vh;
-  background-color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.app{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:100%;
 }
-
 .container {
+ display:flex;
+ justify-content:center;
+ width:100%;
+
 }
+
+nav {
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px;
+  width:100%;
+
+  background-color: green;
+}
+
+button {
+  background-color: green;
+  color: white;               /* White text */
+  border: none;               /* No border */
+  padding: 10px 20px;         /* 10px top/bottom padding, 20px left/right padding */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-right: 50px;         /* Space between buttons */
+  cursor: pointer;
+  transition: 0.3s;           /* Smooth transition for hover effect */
+  width: 100%;
+  padding:10px;
+}
+
+button:hover {
+  background-color: #45a049;  /* Darker green on hover */
+}
+

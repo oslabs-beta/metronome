@@ -1,7 +1,10 @@
-import * as React from "react";
+import React from "react";
 import Tree from "react-d3-tree";
 import "../components/ComponentTree.css";
+import { customStringify, sendData, saveJSON } from "../helperFuncs/helperFuncs";
+// import xhr from '../background/background'
 
+//fiberTree is passed down from App
 function ComponentTree({ fiberTree }) {
   console.log(fiberTree);
 
@@ -48,7 +51,9 @@ function ComponentTree({ fiberTree }) {
     }
   };
 
-  const result = parseTree(fiberTree[0]);
+  const result= parseTree(fiberTree[0]);
+  //create a new parsedTree with helper function that prevents circular object error.
+  const stringifiedResult = customStringify(result)
 
   console.log("parsed component tree", parseTree(fiberTree[0]));
 
@@ -56,6 +61,8 @@ function ComponentTree({ fiberTree }) {
     <>
       {result ? (
         <div style={{ width: "60rem", height: "60rem" }}>
+          <button style={{ width: "60rem", height: "3rem" }} onClick={()=> saveJSON(result, 'parseTreeData')}>Click to download file</button>
+          <button style={{ width: "60rem", height: "3rem" }} onClick={()=> sendData(stringifiedResult)}>Click to send data</button>
           <div
             id="treeWrapper"
             style={{
@@ -80,4 +87,4 @@ function ComponentTree({ fiberTree }) {
   );
 }
 
-export default ComponentTree;
+export default ComponentTree
