@@ -1,18 +1,22 @@
 import express from 'express';
-import session from 'express-session'
 import ViteExpress from 'vite-express';
-import "dotenv/config"
 import multer from 'multer';
+import dataController from './controller/dataController.js';
+import cors from 'cors';
+import cookieParser from 'cookie-parser'
 import {db, dbEmitter} from '../backend/db/sqlmodel.js';
-import passport from 'passport-google-oauth2'
+import "dotenv/config"
+// import passport from 'passport-google-oauth2'
+import session from 'express-session'
+import userController from './controller/userController.js';
+import cookieController from './controller/cookieController.js';
+import passport from "./auth.js";
 
 
 const app = express();
 
-app.get("/message", (_, res) => res.send("Hello from express!"));
-
 //added code
-app.use(passport.initalize());
+app.use(passport.initialize());
 app.use(passport.session());
 
 import auth from "./auth.js"
@@ -42,90 +46,53 @@ app.get('/protected', isLoggedIn, (req,res) => {
 
 //end of added code
 
-app.post('/api/fileUpload', upload.single('file'), (req, res) => {
-    try {
-      const uploadedFile = req.file;
-  
-}));
 
-app.use(passport.initalize());
+// //added code for log out
+// app.get('/logout', (req, res) => {
+//   req.logout();
+//   req.session.destroy();
+//   res.send('Goodbye!');
+// });
 
-app.get('/auth/google',
-  passport.authenticate('google', { scope:
-      [ 'email', 'profile' ] }
-));
+app.use(express.urlencoded({ extended: true }));
+app.use(cors({ credentials: true, origin: true }));
+app.use(express.json());
+app.use(cookieParser());
+// Set up storage for uploaded files
+const storage = multer.memoryStorage(); // Store the file in memory
+const upload = multer({ storage });
 
-app.get( '/auth/google/callback',
-    passport.authenticate( 'google', {
-        successRedirect: '/auth/protected',
-        failureRedirect: '/auth/google/failure'
-}));
+app.use(express.json());
+app.get("/message", (_, res) => res.send("Hello from express!"));
 
-app.get('/auth/google/failure', (req,res)=> {
-  res.send('Something went wrong')
-}) 
+app.get('/api/dashboard/metrics', dataController.getMetrics,(req,res)=>{
+  console.log(res.locals.metricsData,'i am in the server')
+  return res.status(200).json(res.locals.metricsData);
+}); // TODO
 
-app.get('/auth/protected',isLoggedIn, (req,res)=> {
-  let name = req.user.displayName;
+app.post('/api/fileUpload', upload.single('file'), dataController.getJsonFile, (req, res) => {
+  return res.status(200).json(res.locals.JsonFile);
+  });
 
-  res.send(`Hello ${name}`);
-}); 
-//end of added code
+  app.post('/api/users/register', userController.createUser, (req, res) =>{
+    res.json('created user');
+  });
 
+  app.post('/api/users/login', userController.getUser, cookieController.setCookie, (req, res)=>{
+    res.status(200).json(req.cookies);
+  });
 
-//end of added code
+  app.get('/api/check-session', cookieController.verifyCookie, (req, res) =>{
+    res.status(200).json(req.cookies);
+  })
 
-//added code
-function isLoggedIn(req,res,next){
-  req.user?next():res.sendStatus(401);
-}
-app.use(session({
-  secret: 'mysecret',
-  resave: false,
-  saveUnitalized: true,
-  cookie: {secure: false}
-  
-}));
-
-app.use(passport.initalize());
-
-app.get('/auth/google',
-  passport.authenticate('google', { scope:
-      [ 'email', 'profile' ] }
-));
-
-app.get( '/auth/google/callback',
-    passport.authenticate( 'google', {
-        successRedirect: '/auth/protected',
-        failureRedirect: '/auth/google/failure'
-}));
-
-app.get('/auth/google/failure', (req,res)=> {
-  res.send('Something went wrong')
-}) 
-
-app.get('/auth/protected',isLoggedIn, (req,res)=> {
-  let name = req.user.displayName;
-
-  res.send(`Hello ${name}`);
-}); 
-//end of added code
-
+  app.post('/saveData',(req,res)=>{
+    console.log('testing from extension', req.body);
+    res.status(200).send('ok');
+  })
 
 dbEmitter.on("dbConnected", () => {
     console.log("Server is listening...");
   });
-
-  // Function to calculate the total rendering time for a component
-  function calculateTotalRenderTime(componentData) {
-    return componentData.reduce((totalTime, measure) => totalTime + measure.duration, 0);
-  }
-
-  //added code for log out
-app.get('/logout', (req, res) => {
-  req.logout();
-  req.session.destroy();
-  res.send('Goodbye!');
-})
 
 ViteExpress.listen(app, 3000, () => console.log("Server is listening..."));
