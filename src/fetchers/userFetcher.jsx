@@ -24,7 +24,6 @@ export const registerUser = async (name, email, password) => {
 export const checkSession = async () => {
   try {
     const res = await axios.get('api/check-session');
-    console.log(res)
     return res.data;
   } catch (err) {
     console.log(err);

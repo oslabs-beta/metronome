@@ -19,7 +19,6 @@ const storage = multer.memoryStorage(); // Store the file in memory
 const upload = multer({ storage });
 
 app.use(express.json());
-app.get("/message", (_, res) => res.send("Hello from express!"));
 
 app.get('/api/dashboard/metrics', dataController.getMetrics,(req,res)=>{
   console.log(res.locals.metricsData,'i am in the server')

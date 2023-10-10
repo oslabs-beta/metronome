@@ -1,4 +1,8 @@
 import {db} from '../db/sqlmodel.js';
+import express from 'express';
+import cookieParser from'cookie-parser'; // Import the cookie-parser middleware
+const app = express();
+app.use(cookieParser()); // Use the cookie-parser middleware
 // // const storage = multer.memoryStorage(); // Store the file in memory
 // const upload = multer({ storage });
 // import express from 'express';
@@ -10,7 +14,6 @@ let parsedJsonData=null;
 //getJsonFile saves the uploaded json file to res.locals
 dataController.getJsonFile = async (req, res, next)=>{
     // upload.single('file');
-    console.log('i am in dataController.getJsonFile');
     try{
         // cosole.log(req.file,'i am req.file');
         const uploadedFile = req.file;
@@ -50,5 +53,11 @@ dataController.getMetrics = async(req,res,next)=>{
     } catch (err) {
         return next(err);
     }
+}
+
+dataController.saveExtensionData = async(req, res, next)=>{
+    const receivedData = req.body
+    const username = req.cookies.user
+    const queryStr = `SELECT * FROM users WHERE username = '${email}';`;
 }
 export default dataController;

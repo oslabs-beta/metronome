@@ -16,20 +16,8 @@ export default function Login() {
 	const [error, setError] = useState(false);
 
      useEffect(()=>{
-		// const checkUserSession = async () => {
-		// try {
-		// 	const res = await checkSession();
-		// 	if (res) {
-		// 	setIsLoggedIn(true);
-		// 	}
-		// 	} catch (err) {
-		// 	console.log(err);
-		// 	}
-		// };
-		// checkUserSession();
         checkSession()
 		.then((res)=>{
-			console.log('this is result from checksession',res)
 			if(res.id){
 				setIsLoggedIn(true)
 				navigate("/dashboard")
