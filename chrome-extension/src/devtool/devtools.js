@@ -1,5 +1,5 @@
 chrome.devtools.panels.create(
-  "Sample Panel",
+  "Metronome",
   "icon.png",
   "popup.html",
   (panel) => {
