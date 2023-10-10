@@ -10,7 +10,8 @@ import "dotenv/config"
 import session from 'express-session'
 import userController from './controller/userController.js';
 import cookieController from './controller/cookieController.js';
-import passport from "./auth.js";
+import passport from 'passport';
+// import passport from "./auth.js";
 
 
 const app = express();
@@ -19,7 +20,6 @@ const app = express();
 app.use(passport.initialize());
 app.use(passport.session());
 
-import auth from "./auth.js"
 function isLoggedIn(req, res, next) {
   req.user ? next() : res.sendStatus(401);
 }

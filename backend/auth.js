@@ -5,12 +5,12 @@ const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 import GoogleStrategy from "passport-google-oauth2"
 // const GoogleStrategy = require('passport-google-oauth2');
-import use from 'passport'
+import passport from 'passport';
 
 
 
 
-use(new GoogleStrategy({
+passport.use(new GoogleStrategy({
     clientID:     GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
     callbackURL: "http://localhost:5000/auth/google/callback",
