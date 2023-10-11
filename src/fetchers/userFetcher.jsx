@@ -39,3 +39,25 @@ export const logoutUser = async () => {
     return err;
   }
 }
+
+export const getProject = async () =>{
+    try{
+      const res = await axios.get('api/getProject');
+      return res.data;
+    }
+    catch(err){
+      console.log(err);
+      return err;
+    }
+}
+
+export const getVersion = async () =>{
+  try{
+    const res = await axios.get('api/getVersion');
+    return res.data;
+  }
+  catch(err){
+    console.log(err);
+    return err;
+  }
+}

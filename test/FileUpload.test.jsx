@@ -1,6 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import {expect, test} from '@testing-library/jest-dom';
+import { render, fireEvent, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import FileUpload from '../src/components/FileUpload';
 
@@ -17,7 +16,7 @@ test('should handle file upload', () => {
 
   expect(getByText('test-file.txt - text/plain')).toBeInTheDocument();
 
-  const submitButton = getByText('Upload');
+  const submitButton = screen.getByTestId('upload-button');
   fireEvent.click(submitButton);
 
   expect(fetch).toHaveBeenCalledWith('/api/fileUpload', {
