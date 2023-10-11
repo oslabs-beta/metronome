@@ -36,10 +36,10 @@ const Dashboard = () => {
 
   return (
     <>
-      <BarChart data={metrics} />
-      <OverviewChart data={metrics} />
-      <PieChart data={metrics} />
-    </>
+      <BarChart data={metrics} data-testid="bar-chart" />
+      <OverviewChart data={metrics} data-testid="overview-chart" />
+      <PieChart data={metrics} data-testid="pie-chart" />
+  </>
   );
 }
 
