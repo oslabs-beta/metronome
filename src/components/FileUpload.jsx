@@ -1,10 +1,42 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import { getProjects, addProjects } from '../fetchers/projectFetcher';
 
 
 function FileUpload() {
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
+  const [projects, setProjects] = useState(["Project1", "Project2"]);
+  const [selectedProject, setSelectedProject] = useState('');
+  const [query, setQuery] = useState('');
+  const [filteredProjects, setFilteredProjects] = useState(projects);
+  const [showAddProject, setShowAddProject] = useState(false);
+
+  const handleProjectSubmit = (e) => {
+    e.preventDefault();
+    if (selectedProject === 'Add project') {
+      // Aquí podrías manejar la creación de un nuevo proyecto
+      console.log('Create new project', query);
+      setProjects([...projects, query]);
+      setQuery('');
+      setSelectedProject('');
+    } else {
+      // Aquí podrías manejar la selección de un proyecto existente
+      console.log('Selected project', selectedProject);
+    }
+  };
+
+  useEffect(() => {
+
+    setProjects(getProjects())
+
+    const newFilteredProjects = projects.filter((projects) =>
+      projects.toLowerCase().includes(query.toLowerCase())
+    );
+    setShowAddProject(newFilteredProjects.length === 0);
+    setFilteredProjects(newFilteredProjects);
+  }, [query, projects]);
+
   const handleFileChange = (e)  => {
     if (e.target.files) {
         console.log(e.target.files[0])
@@ -45,6 +77,26 @@ function FileUpload() {
 
         <input className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" type='submit' onClick={e=>handleUploadClick(e)}/>
       </form> 
+      <form onSubmit={handleProjectSubmit}>
+      <input
+        type="text"
+        placeholder="Find project..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
+      <select
+        value={selectedProject}
+        onChange={(e) => setSelectedProject(e.target.value)}
+      >
+        {filteredProjects.map((projects, index) => (
+          <option key={index} value={projects}>
+            {projects}
+          </option>
+        ))}
+        {showAddProject && <option value="Add project">Add project</option>}
+      </select>
+      <button type="submit">Submit</button>
+    </form>
     </div>
     </div>
   );

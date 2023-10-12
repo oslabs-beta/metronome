@@ -9,6 +9,9 @@ import {db, dbEmitter} from '../backend/db/sqlmodel.js';
 import userController from './controller/userController.js';
 import cookieController from './controller/cookieController.js';
 
+import projectRoutes from './routes/projectRoutes.js';
+import versionRoutes from './routes/versionRoutes.js'
+
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ credentials: true, origin: true }));
@@ -19,8 +22,9 @@ const storage = multer.memoryStorage(); // Store the file in memory
 const upload = multer({ storage });
 
 app.use(express.json());
-app.get("/message", (_, res) => res.send("Hello from express!"));
 
+app.use('/api/projects', projectRoutes);
+app.use('/api/versions', versionRoutes);
 app.get('/api/dashboard/metrics', dataController.getMetrics,(req,res)=>{
   console.log(res.locals.metricsData,'i am in the server')
   return res.status(200).json(res.locals.metricsData);

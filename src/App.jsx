@@ -12,25 +12,6 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // checks whether user has an active session or not on component loading
-  // useEffect(() => {
-  //   const checkUserSession = async () => {
-  //     try {
-  //       setIsLoading(true);
-  //       const res = await checkSession();
-  //       if (res) {
-  //         setIsLoggedIn(true);
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   checkUserSession();
-  // }, []);
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
