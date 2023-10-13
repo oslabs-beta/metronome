@@ -1,10 +1,13 @@
 import React from "react";
 import Tree from "react-d3-tree";
 import "../components/ComponentTree.css";
-import { customStringify, sendData, saveJSON } from "../helperFuncs/helperFuncs";
+import {
+  customStringify,
+  sendData,
+  saveJSON,
+} from "../helperFuncs/helperFuncs";
 // import xhr from '../background/background'
 
-//fiberTree is passed down from App
 function ComponentTree({ fiberTree }) {
   console.log(fiberTree);
 
@@ -19,7 +22,7 @@ function ComponentTree({ fiberTree }) {
     return children;
   };
 
-  const parseTree = (tree) => {
+  const parseTreeInTreeStructure = (tree) => {
     if (!tree) return;
     let obj;
     console.log("parsetree", tree);
@@ -29,40 +32,82 @@ function ComponentTree({ fiberTree }) {
       if (tree.child) {
         obj = {
           name: tree.name,
-          attributes: {
-            actualDuration: tree.actualDuration,
-            selfBaseDuration: tree.selfBaseDuration,
-          },
+          // attributes: {
+          //   actualDuration: tree.actualDuration,
+          //   selfBaseDuration: tree.selfBaseDuration,
+          // },
           children: [tree.child, ...getChildren(tree.child)].map((elem) =>
-            parseTree(elem)
+            parseTreeInTreeStructure(elem)
           ),
         };
       } else {
         obj = {
           name: tree.name,
-          attributes: {
-            actualDuration: tree.actualDuration,
-            selfBaseDuration: tree.selfBaseDuration,
-          },
-          children: [...getChildren(tree.child)].map((elem) => parseTree(elem)),
+          // attributes: {
+          //   actualDuration: tree.actualDuration,
+          //   selfBaseDuration: tree.selfBaseDuration,
+          // },
+          children: [...getChildren(tree.child)].map((elem) =>
+            parseTreeInTreeStructure(elem)
+          ),
         };
       }
       return obj;
     }
   };
 
-  const result= parseTree(fiberTree[0]);
-  //create a new parsedTree with helper function that prevents circular object error.
-  const stringifiedResult = customStringify(result)
+  const removeNFCsFromChildArray = (tree) => {
+    if (tree.children === null) return null;
+    let parsedChildArray = [];
+    for (let i = 0; i < tree.children.length; i++) {
+      const el = tree.children[i];
+      if (el.name === "NFC") {
+        parsedChildArray = parsedChildArray.concat(
+          removeNFCsFromChildArray({ name: tree.name, children: el.children })
+        );
+      } else parsedChildArray.push(el);
+    }
 
-  console.log("parsed component tree", parseTree(fiberTree[0]));
+    console.log("Parsed Child Array", parsedChildArray);
+    return parsedChildArray;
+  };
+
+  const removeAllNFCs = (tree) => {
+    //ASSUMING THAT THE ROOT NODE OF TREE IS NOT A NFC
+    const immediateChildren = removeNFCsFromChildArray(tree);
+    const actualChildren = immediateChildren.map((child) => {
+      return { name: child.name, children: removeAllNFCs(child) };
+    });
+    return actualChildren;
+  };
+
+  const final = (tree) => {
+    return { name: tree.name, children: removeAllNFCs(tree) };
+  };
+
+  const result = parseTreeInTreeStructure(fiberTree[0])
+    ? final(parseTreeInTreeStructure(fiberTree[0]).children[0])
+    : null;
+
+  //create a new parsedTree with helper function that prevents circular object error.
+  const stringifiedResult = customStringify(result);
 
   return (
     <>
       {result ? (
         <div style={{ width: "60rem", height: "60rem" }}>
-          <button style={{ width: "60rem", height: "3rem" }} onClick={()=> saveJSON(result, 'parseTreeData')}>Click to download file</button>
-          <button style={{ width: "60rem", height: "3rem" }} onClick={()=> sendData(stringifiedResult)}>Click to send data</button>
+          <button
+            style={{ width: "60rem", height: "3rem" }}
+            onClick={() => saveJSON(result, "parseTreeData")}
+          >
+            Click to download file
+          </button>
+          <button
+            style={{ width: "60rem", height: "3rem" }}
+            onClick={() => sendData(stringifiedResult)}
+          >
+            Click to send data
+          </button>
           <div
             id="treeWrapper"
             style={{
@@ -87,4 +132,4 @@ function ComponentTree({ fiberTree }) {
   );
 }
 
-export default ComponentTree
+export default ComponentTree;
