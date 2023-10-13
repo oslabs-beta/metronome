@@ -1,3 +1,5 @@
+// import { disableValidation } from "schema-utils";
+
 // RETRIVE GLOBAL HOOK AND SAVE IN REACTDEVGLOBALHOOK VARIABLE
 const reactDevGlobalHook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
 
@@ -74,6 +76,7 @@ const customOnCommitFiberRoot = (onCommitFiberRoot) => {
     );
     console.log("this is the unparsed tree", fiberRoot.current);
     eventList.push(parseTree(fiberRoot.current));
+    console.log("EVENT LIST BEFORE STRINGIFY", eventList);
     const eventListStr = JSON.stringify(eventList[eventList.length - 1]);
 
     console.log("current fiber tree", eventList[eventList.length - 1]);
@@ -92,4 +95,3 @@ reactDevGlobalHook.onCommitFiberRoot = customOnCommitFiberRoot(
 );
 
 // REACT DEV TOOL GLOBAL HOOK
-
