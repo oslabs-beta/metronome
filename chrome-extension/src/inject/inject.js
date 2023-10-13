@@ -22,21 +22,13 @@ const parseTree = (reactFiberTree) => {
   } else {
     // console.log("In the else block", reactFiberTree.elementType);
     return {
-      name: "THIS IS NOT A FUNCTIONAL COMPONENT",
+      name: "NFC",
       child: parseTree(reactFiberTree.child),
       sibling: parseTree(reactFiberTree.sibling),
     };
     // return parseTree(reactFiberTree.child) || parseTree(reactFiberTree.sibling);
   }
 };
-
-//Parse Tree function will get rid of all nonfunctional component and only retrieve data when the
-//current element type is a functional component
-
-// Unless if the non fucntional component had both a child and sibling it will check to see
-// whether the child or sibling leads to a functional component.
-// If it does then we need that nonfunctional element type in our parsed tree to store the child
-// and the sibling
 
 // FUNCTION: CREATING CUSTOMIZED ONCOMMITFIBER ROOT FUNCTION
 const customOnCommitFiberRoot = (onCommitFiberRoot) => {
