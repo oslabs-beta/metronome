@@ -27,3 +27,16 @@ window.addEventListener("message", (event) => {
     });
   }
 });
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === 'CLEAR_EVENT_LIST') {
+    console.log('i am in contentScript.js for CLEAR_EVENT_LIST');
+    window.postMessage({ type: 'CLEAR_EVENT_LIST' }, '*');
+    // Send the response asynchronously
+    setTimeout(() => {
+      sendResponse({ result: "CLEAR_EVENT_LIST handled in contentScript.js" });
+    }, 0);
+    // Return true to indicate that the response will be sent asynchronously
+    return true;
+  }
+});
