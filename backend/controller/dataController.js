@@ -1,4 +1,4 @@
-import {db} from '../db/sqlmodel.js'ñ
+import {db} from '../db/sqlmodel.js';
 
 const dataController ={};
 let parsedJsonData=null;

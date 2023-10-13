@@ -1,46 +1,63 @@
 import { ChangeEvent, useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { getProjects, addProjects } from '../fetchers/projectFetcher';
+import { getVersions } from '../fetchers/versionFetcher';
 
 
 function FileUpload() {
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
-  const [projects, setProjects] = useState(["Project1", "Project2"]);
+  const [fileAdded, setFileAdded] = useState(false)
+  const [projects, setProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState('');
-  const [query, setQuery] = useState('');
+  const [projectQuery, setProjectQuery] = useState('');
   const [filteredProjects, setFilteredProjects] = useState(projects);
   const [showAddProject, setShowAddProject] = useState(false);
+  const [versions, setVersions] = useState([])
+  
 
   const handleProjectSubmit = (e) => {
     e.preventDefault();
+    console.log(selectedProject)
     if (selectedProject === 'Add project') {
-      // Aquí podrías manejar la creación de un nuevo proyecto
-      console.log('Create new project', query);
-      setProjects([...projects, query]);
-      setQuery('');
-      setSelectedProject('');
+      // Add new project logic
+      console.log("adding new project", projectQuery)
+      addProjects({project_name: projectQuery})
+      // setProjectQuery('');
+      // setSelectedProject('');
     } else {
-      // Aquí podrías manejar la selección de un proyecto existente
+      // Existing project
       console.log('Selected project', selectedProject);
+      //fetchVersions from that project
+      const fetchVersions = async () => {
+        const fetchedVersions = await getVersions();
+        setVersions(fetchedVersions);
+      };
+      fetchVersions(); 
     }
   };
 
   useEffect(() => {
+    const fetchProjects = async () => {
+      const fetchedProjects = await getProjects();
+      setProjects(fetchedProjects);
+    };
+    fetchProjects();
+  }, []);
 
-    setProjects(getProjects())
-
-    const newFilteredProjects = projects.filter((projects) =>
-      projects.toLowerCase().includes(query.toLowerCase())
+  useEffect(()=>{
+      const newFilteredProjects = projects.filter((project) =>
+      project.toLowerCase().includes(projectQuery.toLowerCase())
     );
     setShowAddProject(newFilteredProjects.length === 0);
     setFilteredProjects(newFilteredProjects);
-  }, [query, projects]);
+    }, [projectQuery, projects]);
 
   const handleFileChange = (e)  => {
     if (e.target.files) {
         console.log(e.target.files[0])
       setFile(e.target.files[0]);
+      setFileAdded(true);
     }
   };
 
@@ -77,16 +94,18 @@ function FileUpload() {
 
         <input className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" type='submit' onClick={e=>handleUploadClick(e)}/>
       </form> 
-      <form onSubmit={handleProjectSubmit}>
+      {fileAdded && <form onSubmit={handleProjectSubmit}>
       <input
         type="text"
         placeholder="Find project..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        value={projectQuery}
+        onChange={(e) => setProjectQuery(e.target.value)}
       />
       <select
         value={selectedProject}
-        onChange={(e) => setSelectedProject(e.target.value)}
+        onChange={(e) => {
+          console.log('Selected value:', e.target.value);
+          setSelectedProject(e.target.value)}}
       >
         {filteredProjects.map((projects, index) => (
           <option key={index} value={projects}>
@@ -95,8 +114,8 @@ function FileUpload() {
         ))}
         {showAddProject && <option value="Add project">Add project</option>}
       </select>
-      <button type="submit">Submit</button>
-    </form>
+      <button type="submit">Select</button>
+    </form>}
     </div>
     </div>
   );

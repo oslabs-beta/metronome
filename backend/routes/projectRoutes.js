@@ -1,12 +1,14 @@
 import express from 'express';
 const router = express.Router();
 
-import versionController from '../controller/versionController'
+import projectController from '../controller/projectController.js'
 
-router.get('/getVersions', (req, res)=> {
-
+router.get('/getProjects', projectController.getProjects, (req, res)=> {
+    res.status(200).send(res.locals.projectNames)
 });
 
-router.post('/addVersions', (req, res)=>{
-
+router.post('/addProjects', projectController.addProjects, (req, res)=>{
+    res.status(200).send('ok')
 });
+
+export default router;

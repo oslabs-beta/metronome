@@ -9,9 +9,9 @@ export const getProjects = async () => {
   }
 }
 
-export const addProjects = async ({id}) => {
+export const addProjects = async (projectName) => {
     try {
-      const res = await axios.post('/api/projects/addProjects', { id });
+      const res = await axios.post('/api/projects/addProjects', projectName);
       return res.data;
     } catch (err) {
       console.log(err);

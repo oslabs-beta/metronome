@@ -1,12 +1,12 @@
-import express from 'express';
-const router = express.Router();
+// import express from 'express';
+// const router = express.Router();
 
-import versionController from '../controller/versionController'
+// import versionController from '../controller/versionController'
 
-router.get('/getVersions', (req, res)=> {
+// router.get('/getVersions', (req, res)=> {
 
-});
+// });
 
-router.post('/addVersions', (req, res)=>{
+// router.post('/addVersions', (req, res)=>{
 
-});
+// });

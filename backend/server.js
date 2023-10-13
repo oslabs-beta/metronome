@@ -10,7 +10,7 @@ import userController from './controller/userController.js';
 import cookieController from './controller/cookieController.js';
 
 import projectRoutes from './routes/projectRoutes.js';
-import versionRoutes from './routes/versionRoutes.js'
+// import versionRoutes from './routes/versionRoutes.js'
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -24,7 +24,7 @@ const upload = multer({ storage });
 app.use(express.json());
 
 app.use('/api/projects', projectRoutes);
-app.use('/api/versions', versionRoutes);
+// app.use('/api/versions', versionRoutes);
 app.get('/api/dashboard/metrics', dataController.getMetrics,(req,res)=>{
   console.log(res.locals.metricsData,'i am in the server')
   return res.status(200).json(res.locals.metricsData);
