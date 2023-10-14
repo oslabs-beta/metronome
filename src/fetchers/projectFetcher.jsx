@@ -20,6 +20,7 @@ export const addProjects = async (projectName) => {
 
   export const setProject = async (projectName) => {
     try {
+      console.log(projectName)
       const res = await axios.post('/api/projects/setProject', projectName);
       return res.data;
     } catch (err) {

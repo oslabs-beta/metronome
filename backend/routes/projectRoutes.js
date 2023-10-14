@@ -7,7 +7,7 @@ router.get('/getProjects', projectController.getProjects, (req, res)=> {
     res.status(200).send(res.locals.projectNames)
 });
 
-router.post('/addProjects', projectController.addProjects, (req, res)=>{
+router.post('/addProjects', projectController.addProjects, projectController.setCookie, (req, res)=>{
     res.status(200).send('ok')
 });
 

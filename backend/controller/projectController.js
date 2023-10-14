@@ -43,7 +43,7 @@ projectController.getProjects = async (req, res, next) => {
     }
 }
 projectController.setCookie = async (req, res, next) => {
-    res.cookie('project_name', res.locals.project_name)
+    res.cookie('project_name', req.body.project_name)
     next()
 }
 // `INSERT INTO projects (project_name, user_id)

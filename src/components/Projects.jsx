@@ -10,6 +10,8 @@ function Projects({fileAdded}) {
   const [filteredProjects, setFilteredProjects] = useState(projects);
   const [showAddProject, setShowAddProject] = useState(false);
   const [showVersion, setShowVersion] = useState(false)
+  const [hideForm, setHideForm] = useState(false)
+  const [projectSuccess, setProjectSuccess] = useState('')
 
   const handleProjectSubmit = (e) => {
     e.preventDefault();
@@ -18,13 +20,14 @@ function Projects({fileAdded}) {
       // Add new project logic
       console.log("adding new project", projectQuery)
       addProjects({project_name: projectQuery})
-      setProjectQuery('');
-      setSelectedProject('');
+      setProjectSuccess(`Successfully created and selected ${projectQuery}`)
+      setHideForm(true)
     } else {
       // Existing project
       console.log('Selected project', selectedProject);
       setProject({project_name: selectedProject});
-
+      setProjectSuccess(`Successfully selected ${selectedProject}`)
+      setHideForm(true)
       }
     };
 
@@ -46,7 +49,9 @@ useEffect(()=>{
 
   return (
     <div>
-    {fileAdded && <div><form onSubmit={handleProjectSubmit}>
+    {fileAdded && <div>   
+    <form hidden={hideForm} onSubmit={handleProjectSubmit}>
+    <h1>Select or create a new project:</h1>    
     <input
       type="text"
       placeholder="Add a new project"
@@ -69,6 +74,7 @@ useEffect(()=>{
       {!showAddProject && <button type="submit">Select</button>}
     {showAddProject && <button onClick={() => setSelectedProject('Add project')}>Add project</button>}
   </form>
+  {hideForm && <h2>{projectSuccess}</h2>}
   {/* <Versions showVersion={showVersion}/>  */}
   </div>}
   </div>
