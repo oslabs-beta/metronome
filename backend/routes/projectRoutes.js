@@ -11,4 +11,8 @@ router.post('/addProjects', projectController.addProjects, (req, res)=>{
     res.status(200).send('ok')
 });
 
+router.post('/setProject', projectController.setCookie, (req, res)=>{
+    res.status(200).send('ok')
+});
+
 export default router;

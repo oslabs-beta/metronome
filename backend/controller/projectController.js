@@ -24,6 +24,26 @@ projectController.getProjects = async (req, res, next) => {
 
  projectController.addProjects = async (req, res, next) => {
     console.log(req.body.project_name)
+    res.locals.project_name = req.body.project_name
+    res.locals.username = req.cookies.user
+    const getIdQuery = `SELECT id 
+    FROM users 
+    WHERE username='${res.locals.username}'`
+    const getIdResult =  await db.query(getIdQuery);
+    const userId = getIdResult.rows[0].id;
+    const addProjectQuery =`INSERT INTO projects (project_name, user_id)
+    VALUES ('${res.locals.project_name}', (SELECT id FROM users WHERE id = '${userId}'))`;
+    const addProjectResult = await db.query(addProjectQuery);
+    if(addProjectResult.rowCount === 1){
+        console.log('added succesfully')
+        next() 
+    }
+    else{
+        console.log('Error processing request');
+    }
+}
+projectController.setCookie = async (req, res, next) => {
+    res.cookie('project_name', res.locals.project_name)
     next()
 }
 // `INSERT INTO projects (project_name, user_id)
