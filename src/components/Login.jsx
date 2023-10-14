@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { loginUser, checkSession } from '../fetchers/userFetcher';
 import { useNavigate, Link } from "react-router-dom";
+//added code
+
+//end of added code
 import Signup from './Signup';
 
 export default function Login() {
@@ -133,10 +136,21 @@ export default function Login() {
                 Not a member?
 				<Link to={'/signup'} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Register here!</Link>
             </p>
-			<p className="mt-10 text-center text-sm text-gray-500">
-			<a href='/auth/google'>Authenticate With Google</a>
-			</p>
         </div>
+ {/* added code */}
+	<div className="center-container text-center">
+  <div className="custom-google-btn" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <a href="http://localhost:3000/auth/google" className="custom-google-link">
+      <img
+        src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png"
+        alt="Google Sign-In"
+      />
+    </a>
+  </div>
+</div>
+
+ {/* end of added code */}
 	</div>
+	
 	);
 }

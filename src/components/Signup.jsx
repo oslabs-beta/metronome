@@ -136,6 +136,12 @@ export default function Signup() {
                 <Link to={'/'} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Login now!</Link>
             </p>
         </div>
+		<div className="mt-10 text-center text-sm text-gray-500">
+        Login With{' '}
+        <Link to="http://localhost:3000/auth/google" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+          Google
+        </Link>
+      </div>
 	</div>
 	);
 }
