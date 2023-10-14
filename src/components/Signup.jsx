@@ -135,13 +135,18 @@ export default function Signup() {
                 Already a member?
                 <Link to={'/'} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Login now!</Link>
             </p>
+			<hr style={{ margin: '20px 0', borderTop: '1px solid #ddd' }} />
         </div>
-		<div className="mt-10 text-center text-sm text-gray-500">
-        Login With{' '}
-        <Link to="http://localhost:3000/auth/google" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-          Google
-        </Link>
-      </div>
+		<div className="center-container text-center">
+  <div className="custom-google-btn" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <a href="http://localhost:3000/auth/google" className="custom-google-link">
+      <img
+        src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png"
+        alt="Google Sign-In"
+      />
+    </a>
+  </div>
+</div>
 	</div>
 	);
 }

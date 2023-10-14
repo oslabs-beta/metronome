@@ -136,6 +136,7 @@ export default function Login() {
                 Not a member?
 				<Link to={'/signup'} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Register here!</Link>
             </p>
+			<hr style={{ margin: '20px 0', borderTop: '1px solid #ddd' }} />
         </div>
  {/* added code */}
 	<div className="center-container text-center">
