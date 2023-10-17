@@ -15,14 +15,12 @@ versionController.getVersions = async (req, res, next) => {
     JOIN users ON projects.user_id = users.id
     WHERE users.username = '${res.locals.username}' AND projects.project_name = '${res.locals.project_name}';`;
     const getVersionsResult = await db.query(getVersionsQuery)
-    console.log(getVersionsResult)
     const versionNames = getVersionsResult.rows.map(row => row.version_name);
     res.locals.versionNames = versionNames
     next()   
 }
 
  versionController.addVersions = async (req, res, next) => {
-    console.log(req.body.version_name)
     res.locals.version_name = req.body.version_name
     res.locals.project_name = req.cookies.project_name
     res.locals.username = req.cookies.user
@@ -36,9 +34,7 @@ versionController.getVersions = async (req, res, next) => {
     SELECT project_id, '${req.body.version_name}'
     FROM user_project;`;
     const addVersionResult = await db.query(addVersionQuery);
-    console.log(addVersionResult)
     if(addVersionResult.rowCount === 1){
-        console.log('added succesfully')
         next() 
     }
     else{
@@ -50,10 +46,3 @@ versionController.setCookie = async (req, res, next) => {
     next()
 }
 export default versionController;
-
-
-// Yes, it is possible to get the id from a provided username in the users table and the id from a provided project_name in the projects table in a single query. You can use a JOIN operation to combine rows from two or more tables based on a related column between them. Here is an example of how you can do it:
-// SELECT users.id AS user_id, projects.id AS project_id
-// FROM
-
-// In this query, replace 'provided_username' and 'provided_project_name' with the actual username and project name you are looking for. This query will return the user_id and project_id for the provided username and project name.

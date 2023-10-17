@@ -23,7 +23,6 @@ projectController.getProjects = async (req, res, next) => {
 }
 
  projectController.addProjects = async (req, res, next) => {
-    console.log(req.body.project_name)
     res.locals.project_name = req.body.project_name
     res.locals.username = req.cookies.user
     const getIdQuery = `SELECT id 
@@ -35,7 +34,6 @@ projectController.getProjects = async (req, res, next) => {
     VALUES ('${res.locals.project_name}', (SELECT id FROM users WHERE id = '${userId}'))`;
     const addProjectResult = await db.query(addProjectQuery);
     if(addProjectResult.rowCount === 1){
-        console.log('added succesfully')
         next() 
     }
     else{

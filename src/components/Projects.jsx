@@ -18,14 +18,12 @@ function Projects({showFinalSubmit, setShowFinalSubmit}) {
     console.log(selectedProject)
     if (selectedProject === 'Add project') {
       // Add new project logic
-      console.log("adding new project", projectQuery)
       await addProjects({project_name: projectQuery})
       setProjectSuccess(`Successfully created and selected project: '${projectQuery}'`)
       setHideForm(true)
       setShowVersion(true)
     } else {
       // Existing project
-      console.log('Selected project', selectedProject);
       await setProject({project_name: selectedProject});
       setProjectSuccess(`Successfully selected project: '${selectedProject}'`)
       setHideForm(true)
@@ -66,7 +64,6 @@ useEffect(()=>{
     {!showAddProject && <select
       value={selectedProject}
       onChange={(e) => {
-        console.log('Selected value:', e.currentTarget.value);
         setSelectedProject(e.currentTarget.value)}}
     >
       {filteredProjects.map((project, index) => (

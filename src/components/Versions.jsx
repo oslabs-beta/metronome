@@ -16,14 +16,12 @@ function Versions({showVersion, showFinalSubmit, setShowFinalSubmit}) {
     console.log(selectedVersion)
     if (selectedVersion === 'Add version') {
       // Add new version logic
-      console.log("adding new version", versionQuery)
       await addVersions({version_name: versionQuery})
       setVersionSuccess(`Successfully created and selected version: '${versionQuery}'`)
       setHideForm(true)
       setShowFinalSubmit(true)
     } else {
       // Existing version
-      console.log('Selected version', selectedVersion);
       await setVersion({version_name: selectedVersion});
       setVersionSuccess(`Successfully selected version: '${selectedVersion}'`)
       setHideForm(true)
@@ -34,7 +32,6 @@ function Versions({showVersion, showFinalSubmit, setShowFinalSubmit}) {
 useEffect(() => {
     const fetchVersions = async () => {
         const fetchedVersions = await getVersions();
-        console.log('fetchedVersions:', fetchedVersions); // Add this line
         setVersions(fetchedVersions);
     };
     fetchVersions();
@@ -65,7 +62,6 @@ useEffect(()=>{
     {!showAddVersion && <select
       value={selectedVersion}
       onChange={(e) => {
-        console.log('Selected value:', e.currentTarget.value);
         setSelectedVersion(e.currentTarget.value)}}
     >
       {filteredVersions.map((version, index) => (

@@ -20,7 +20,6 @@ export const addVersions = async (versionName) => {
 
   export const setVersion = async (versionName) => {
     try {
-      console.log(versionName)
       const res = await axios.post('/api/versions/setVersion', versionName);
       return res.data;
     } catch (err) {
