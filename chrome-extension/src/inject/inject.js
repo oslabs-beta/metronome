@@ -1,3 +1,5 @@
+// import { disableValidation } from "schema-utils";
+
 // RETRIVE GLOBAL HOOK AND SAVE IN REACTDEVGLOBALHOOK VARIABLE
 const reactDevGlobalHook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
 
@@ -8,7 +10,8 @@ const eventList = [];
 const parseTree = (reactFiberTree) => {
   if (reactFiberTree === null) return null;
   else if (typeof reactFiberTree.elementType === "function") {
-      const elemObj = {
+    // console.log("In the else if block", reactFiberTree.elementType.name);
+    const elemObj = {
       name: reactFiberTree.elementType.name,
       actualDuration: reactFiberTree.actualDuration,
       selfBaseDuration: reactFiberTree.selfBaseDuration,
@@ -17,7 +20,13 @@ const parseTree = (reactFiberTree) => {
     };
     return elemObj;
   } else {
-    return parseTree(reactFiberTree.child) || parseTree(reactFiberTree.sibling);
+    // console.log("In the else block", reactFiberTree.elementType);
+    return {
+      name: "NFC",
+      child: parseTree(reactFiberTree.child),
+      sibling: parseTree(reactFiberTree.sibling),
+    };
+    // return parseTree(reactFiberTree.child) || parseTree(reactFiberTree.sibling);
   }
 };
 
@@ -31,6 +40,7 @@ const customOnCommitFiberRoot = (onCommitFiberRoot) => {
     );
     console.log("this is the unparsed tree", fiberRoot.current);
     eventList.push(parseTree(fiberRoot.current));
+    console.log("EVENT LIST BEFORE STRINGIFY", eventList);
     const eventListStr = JSON.stringify(eventList[eventList.length - 1]);
 
     console.log("current fiber tree", eventList[eventList.length - 1]);
@@ -49,4 +59,3 @@ reactDevGlobalHook.onCommitFiberRoot = customOnCommitFiberRoot(
 );
 
 // REACT DEV TOOL GLOBAL HOOK
-
