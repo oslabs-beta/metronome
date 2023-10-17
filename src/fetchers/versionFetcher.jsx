@@ -2,16 +2,26 @@ import axios from 'axios'
 
 export const getVersions = async () => {
   try {
-    const res = await axios.get('/api/projects/getVersions');
+    const res = await axios.get('/api/versions/getVersions');
     return res.data;
   } catch (err) {
     console.log(err);
   }
 }
 
-export const addVersions = async ({id}) => {
+export const addVersions = async (versionName) => {
     try {
-      const res = await axios.post('/api/projects/addVersions', { id });
+      const res = await axios.post('/api/versions/addVersions', versionName);
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  export const setVersion = async (versionName) => {
+    try {
+      console.log(versionName)
+      const res = await axios.post('/api/versions/setVersion', versionName);
       return res.data;
     } catch (err) {
       console.log(err);

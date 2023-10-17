@@ -43,9 +43,7 @@ projectController.getProjects = async (req, res, next) => {
     }
 }
 projectController.setCookie = async (req, res, next) => {
-    res.cookie('project_name', req.body.project_name)
+    res.cookie('project_name', req.body.project_name,  { expires: new Date(Date.now() + (60*1000)), httpOnly: true })
     next()
 }
-// `INSERT INTO projects (project_name, user_id)
-// VALUES ('metronome', (SELECT id FROM users WHERE id = '${userId}'))`;
 export default projectController;

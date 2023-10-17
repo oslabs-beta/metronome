@@ -6,7 +6,8 @@ import Projects from './Projects';
 function FileUpload() {
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
-  const [fileAdded, setFileAdded] = useState(false)
+  const [fileAdded, setFileAdded] = useState(false);
+  const [showFinalSubmit, setShowFinalSubmit] = useState(false);
 
   const handleFileChange = (e)  => {
     if (e.target.files) {
@@ -40,11 +41,11 @@ function FileUpload() {
        <form className="space-y-6" encType="multipart/form-data">
         <input className="mt-2" type="file"  onChange={handleFileChange} />
 
-        <div className="mt-2">{file && `${file.name} - ${file.type}`}</div>
+        <div className="mt-2">{file && `${file.name} - ${file.type}`}</div>        
 
-        <input className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" type='submit' onClick={e=>handleUploadClick(e)}/>
+        {showFinalSubmit&& <input className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" type='submit' onClick={e=>handleUploadClick(e)}/>}
       </form>
-      <Projects fileAdded={fileAdded}/> 
+      {fileAdded && <Projects showFinalSubmit={showFinalSubmit} setShowFinalSubmit={setShowFinalSubmit}/> }
     </div>
     </div>
   );

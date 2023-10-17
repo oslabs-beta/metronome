@@ -3,7 +3,7 @@ import { ChangeEvent, useState, useEffect } from 'react';
 import { getProjects, addProjects, setProject } from '../fetchers/projectFetcher';
 import Versions from './Versions';
 
-function Projects({fileAdded}) {
+function Projects({showFinalSubmit, setShowFinalSubmit}) {
   const [projects, setProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState('');
   const [projectQuery, setProjectQuery] = useState('');
@@ -13,21 +13,23 @@ function Projects({fileAdded}) {
   const [hideForm, setHideForm] = useState(false)
   const [projectSuccess, setProjectSuccess] = useState('')
 
-  const handleProjectSubmit = (e) => {
+  const handleProjectSubmit = async (e) => {
     e.preventDefault();
     console.log(selectedProject)
     if (selectedProject === 'Add project') {
       // Add new project logic
       console.log("adding new project", projectQuery)
-      addProjects({project_name: projectQuery})
-      setProjectSuccess(`Successfully created and selected ${projectQuery}`)
+      await addProjects({project_name: projectQuery})
+      setProjectSuccess(`Successfully created and selected project: '${projectQuery}'`)
       setHideForm(true)
+      setShowVersion(true)
     } else {
       // Existing project
       console.log('Selected project', selectedProject);
-      setProject({project_name: selectedProject});
-      setProjectSuccess(`Successfully selected ${selectedProject}`)
+      await setProject({project_name: selectedProject});
+      setProjectSuccess(`Successfully selected project: '${selectedProject}'`)
       setHideForm(true)
+      setShowVersion(true)
       }
     };
 
@@ -45,11 +47,14 @@ useEffect(()=>{
     );
     setShowAddProject(newFilteredProjects.length === 0);
     setFilteredProjects(newFilteredProjects);
+    if (newFilteredProjects.length === 1) {
+        setSelectedProject(newFilteredProjects[0]);
+    }
     }, [projectQuery, projects]);
 
   return (
     <div>
-    {fileAdded && <div>   
+    <div>   
     <form hidden={hideForm} onSubmit={handleProjectSubmit}>
     <h1>Select or create a new project:</h1>    
     <input
@@ -75,8 +80,8 @@ useEffect(()=>{
     {showAddProject && <button onClick={() => setSelectedProject('Add project')}>Add project</button>}
   </form>
   {hideForm && <h2>{projectSuccess}</h2>}
-  {/* <Versions showVersion={showVersion}/>  */}
-  </div>}
+  {hideForm && <Versions showVersion={showVersion} showFinalSubmit={showFinalSubmit} setShowFinalSubmit={setShowFinalSubmit}/> }
+  </div>
   </div>
   )
 }
