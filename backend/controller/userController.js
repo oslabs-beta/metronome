@@ -15,7 +15,6 @@ const userController = {
     },
 
     async getUser(req, res, next) {
-        console.log(req.body)
         const { email, password } = req.body;
         if (!email || !password) return next({err: 'incorrect credentials'});
         const queryStr = `SELECT * FROM users WHERE username = '${email}';`;

@@ -4,7 +4,6 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
 import Logout from "./components/Logout";
-import { checkSession } from "./fetchers/userFetcher";
 import FileUpload from "./components/FileUpload";
 
 
