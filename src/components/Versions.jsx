@@ -49,15 +49,16 @@ useEffect(()=>{
     }, [versionQuery, versions]);
 
   return (
-    <div>
-    {showVersion && <div>
-    <form hidden={hideForm} onSubmit={handleVersionSubmit}>
-    <h1>Select or create a new version:</h1>    
+    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    {showVersion && <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+    <form hidden={hideForm} onSubmit={handleVersionSubmit} className="space-y-6">
+    <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-sky-400">Select or create a new version:</h1>    
     <input
       type="text"
       placeholder="Add a new project"
       value={versionQuery}
       onChange={(e) => setVersionQuery(e.target.value)}
+      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
     />
     {!showAddVersion && <select
       value={selectedVersion}
