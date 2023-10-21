@@ -5,8 +5,8 @@ const reactDevGlobalHook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
 
 // STORE THE PARSED FIBER TREE INFORMATION
 // EACH ELEMENT WILL REPRESENT ONE RERENDER THAT OCCURED
-const eventList = [];
-// FUNCTION: FOR PARSING REACT FIBER TREE
+let eventList = [];
+
 const parseTree = (reactFiberTree) => {
   if (reactFiberTree === null) return null;
   else if (typeof reactFiberTree.elementType === "function") {
@@ -117,6 +117,11 @@ const final = (tree) => {
   };
 };
 
+document.addEventListener("CustomEventFromContentScript", function (event) {
+  console.log("Message from content script:", event.detail.message);
+  eventList = [];
+});
+
 // FUNCTION: CREATING CUSTOMIZED ONCOMMITFIBER ROOT FUNCTION
 const customOnCommitFiberRoot = (onCommitFiberRoot) => {
   return (...args) => {
@@ -129,18 +134,10 @@ const customOnCommitFiberRoot = (onCommitFiberRoot) => {
     eventList.push(
       final(parseTreeInTreeStructure(parseTree(fiberRoot.current)))
     );
-    console.log("EVENT LIST BEFORE STRINGIFY", eventList);
-    // const eventListStr = JSON.stringify(eventList[eventList.length - 1]);
     const eventListStr = JSON.stringify(eventList);
-    // console.log("current fiber tree", eventList[eventList.length - 1]);
 
-    window.postMessage({
-      type: "EVENT_LIST",
-      eventListStr,
-    });
+    window.postMessage({ type: "EVENT_LIST", eventListStr });
 
-    console.log("INJECT.JS: eventList", eventList);
-    console.log();
     return onCommitFiberRoot(...args);
   };
 };

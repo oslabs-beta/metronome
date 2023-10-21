@@ -12,50 +12,52 @@ const App = () => {
   //state for recording status, default to false;
   const [recStat, setRecStat] = useState(false);
   const [recButton, setRecButton] = useState("start profiling");
+  const [chartData, setChartData] = useState([]);
 
   const setStatus = () => {
     setRecStat((prevRecStat) => !prevRecStat);
   };
+
+  function sendMessageToContentScript(message) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, message);
+    });
+  }
+
   //update recButton according to recStat
   useEffect(() => {
     if (!recStat) {
       setRecButton("start profiling");
+      sendMessageToContentScript({
+        message: `Hello from popup! IT SJSIJISJISIJ ${idk.length}`,
+      });
+      setChartData([...idk]);
     } else {
       setRecButton("stop profiling");
+      sendMessageToContentScript({
+        message: `Hello from popup! IT SJSIJISJISIJ ${idk.length}`,
+      });
     }
   }, [recStat]);
 
-  useEffect(
-    () => {
-      const msgListener = (request, sender, sendResponse) => {
-        if (recStat) {
-          console.log("inside use effect", JSON.parse(request.data));
-          switch (request.action) {
-            case "EVENT_LIST":
-              setIdk([...JSON.parse(request.data)]);
-              break;
-          }
+  useEffect(() => {
+    const msgListener = (request, sender, sendResponse) => {
+      if (recStat) {
+        console.log("inside use effect", JSON.parse(request.data));
+        switch (request.action) {
+          case "EVENT_LIST":
+            setIdk([...JSON.parse(request.data)]);
+            break;
         }
-      };
+      }
+    };
 
-      chrome.runtime.onMessage.addListener(msgListener);
+    chrome.runtime.onMessage.addListener(msgListener);
 
-      return () => {
-        chrome.runtime.onMessage.removeListener(msgListener);
-      };
-    },
-
-    //   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    //     console.log("inside use Effect", JSON.parse(request.data));
-    //     switch (request.action) {
-    //       case "EVENT_LIST":
-    //         setIdk([JSON.parse(request.data)]);
-    //         break;
-    //     }
-    //   });
-    // }
-    [recStat]
-  );
+    return () => {
+      chrome.runtime.onMessage.removeListener(msgListener);
+    };
+  }, [recStat]);
 
   return (
     <div className="app">
@@ -65,8 +67,10 @@ const App = () => {
         <button onClick={() => setView("chartView")}>Charts</button>
       </nav>
       <div className="container">
-        {/* {view === "treeView" && <ComponentTree fiberTree={idk} />} */}
-        {view === "chartView" && <Charts fiberTree={idk} />}
+        {view === "treeView" && (
+          <ComponentTree fiberTree={idk[idk.length - 1]} />
+        )}
+        {view === "chartView" && <Charts eventList={chartData} />}
         {/* <img src="metronome.png" />; */}
       </div>
     </div>
