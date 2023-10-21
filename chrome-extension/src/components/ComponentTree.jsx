@@ -8,7 +8,6 @@ import {
 } from "../helperFuncs/helperFuncs";
 // import xhr from '../background/background'
 
-//fiberTree is passed down from App
 function ComponentTree({ fiberTree }) {
   const stringifiedResult = customStringify(fiberTree);
 

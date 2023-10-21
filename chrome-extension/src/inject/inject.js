@@ -1,3 +1,5 @@
+// import { disableValidation } from "schema-utils";
+
 // RETRIVE GLOBAL HOOK AND SAVE IN REACTDEVGLOBALHOOK VARIABLE
 const reactDevGlobalHook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
 
