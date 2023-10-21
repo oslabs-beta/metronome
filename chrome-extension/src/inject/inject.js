@@ -3,7 +3,7 @@ const reactDevGlobalHook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
 
 // STORE THE PARSED FIBER TREE INFORMATION
 // EACH ELEMENT WILL REPRESENT ONE RERENDER THAT OCCURED
-const eventList = [];
+let eventList = [];
 
 const parseTree = (reactFiberTree) => {
   if (reactFiberTree === null) return null;
@@ -114,6 +114,11 @@ const final = (tree) => {
     children: removeAllNFCs(tree),
   };
 };
+
+document.addEventListener("CustomEventFromContentScript", function (event) {
+  console.log("Message from content script:", event.detail.message);
+  eventList = [];
+});
 
 // FUNCTION: CREATING CUSTOMIZED ONCOMMITFIBER ROOT FUNCTION
 const customOnCommitFiberRoot = (onCommitFiberRoot) => {

@@ -12,16 +12,31 @@ const App = () => {
   //state for recording status, default to false;
   const [recStat, setRecStat] = useState(false);
   const [recButton, setRecButton] = useState("start profiling");
+  const [chartData, setChartData] = useState([]);
 
   const setStatus = () => {
     setRecStat((prevRecStat) => !prevRecStat);
   };
+
+  function sendMessageToContentScript(message) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, message);
+    });
+  }
+
   //update recButton according to recStat
   useEffect(() => {
     if (!recStat) {
       setRecButton("start profiling");
+      sendMessageToContentScript({
+        message: `Hello from popup! IT SJSIJISJISIJ ${idk.length}`,
+      });
+      setChartData([...idk]);
     } else {
       setRecButton("stop profiling");
+      sendMessageToContentScript({
+        message: `Hello from popup! IT SJSIJISJISIJ ${idk.length}`,
+      });
     }
   }, [recStat]);
 
@@ -55,7 +70,7 @@ const App = () => {
         {view === "treeView" && (
           <ComponentTree fiberTree={idk[idk.length - 1]} />
         )}
-        {view === "chartView" && <Charts eventList={idk} />}
+        {view === "chartView" && <Charts eventList={chartData} />}
         {/* <img src="metronome.png" />; */}
       </div>
     </div>

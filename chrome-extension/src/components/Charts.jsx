@@ -38,23 +38,25 @@ const Charts = ({ eventList }) => {
     if (eventL.actualDuration > 0) {
       console.log("In the very first if block", eventL.children.length);
       if (eventL.children.length === 0) {
-        console.log("Component getting updated");
-        if (renderedComponents[eventL.name]) {
-          renderedComponents[eventL.name].numRender += 1;
-          renderedComponents[eventL.name].events.push({
-            actualDuration: eventL.actualDuration,
-            selfBaseDuration: eventL.selfBaseDuration,
-          });
-        } else {
-          renderedComponents[eventL.name] = {
-            events: [
-              {
-                actualDuration: eventL.actualDuration,
-                selfBaseDuration: eventL.selfBaseDuration,
-              },
-            ],
-            numRender: 1,
-          };
+        if (eventL.selfBaseDuration > 0) {
+          console.log("Component getting updated");
+          if (renderedComponents[eventL.name]) {
+            renderedComponents[eventL.name].numRender += 1;
+            renderedComponents[eventL.name].events.push({
+              actualDuration: eventL.actualDuration,
+              selfBaseDuration: eventL.selfBaseDuration,
+            });
+          } else {
+            renderedComponents[eventL.name] = {
+              events: [
+                {
+                  actualDuration: eventL.actualDuration,
+                  selfBaseDuration: eventL.selfBaseDuration,
+                },
+              ],
+              numRender: 1,
+            };
+          }
         }
       } else {
         let sumChildDurations = 0;
