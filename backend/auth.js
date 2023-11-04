@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import passport  from 'passport';
 import GoogleStrategy from "passport-google-oauth2";
 
-dotenv.config({ path: '../.env' });
+dotenv.config({ path: './.env' });
 
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
