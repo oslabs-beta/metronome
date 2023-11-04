@@ -14,7 +14,7 @@ const App = () => {
   const [recButton, setRecButton]=useState('start profiling');
   const [index, setIndex]=useState(0);
   const [curridk, setcurridk]=useState([]);
-  const [idkrun, setidkrun]=useSate(false);
+
 
   const setStatus=()=>{
     setRecStat(prevRecStat=>(!prevRecStat));
@@ -49,7 +49,6 @@ const App = () => {
     // reset eventlist if useEffect triggered by recStat change.
     if(recStat){
       if (chrome.runtime) {
-        console.log('i am before CLEAR_EVENT_LIST in App.jsx');
         chrome.runtime.sendMessage({ action: 'CLEAR_EVENT_LIST' });
       }
     }
@@ -59,8 +58,8 @@ const App = () => {
           console.log("inside use effect", JSON.parse(request.data));
           switch(request.action){
             case"EVENT_LIST":
-            setIdk([JSON.parse(request.data)]);
-            setidkrun(true);
+            setIdk(prevIdk => [...prevIdk, JSON.parse(request.data)]);
+
             break;
         }
         }
