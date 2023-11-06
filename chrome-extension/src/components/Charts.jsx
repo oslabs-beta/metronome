@@ -123,7 +123,7 @@ const Charts = ({ eventList }) => {
 
   return (
     <div>
-      <BarChart />
+      <BarChart renderedComponents={renderedComponents} />
     </div>
   );
 };
