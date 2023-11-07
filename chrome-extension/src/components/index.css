@@ -5,6 +5,7 @@
   align-items:center;
   width:100%;
 }
+
 .container {
  display:flex;
  justify-content:center;
@@ -22,7 +23,10 @@ nav {
 
   background-color: green;
 }
-
+.test{
+  width:400px;
+  overflow-wrap:break-word;
+}
 button {
   background-color: green;
   color: white;               /* White text */
