@@ -7,7 +7,6 @@ const Charts = ({ eventList }) => {
   // const [componentList, setComponentList] =useState({});
   const renderedComponents = {};
 
-  
   const getDescendant = (node) => {
     console.log("name of the node", node.name);
     //base case
@@ -130,7 +129,7 @@ const Charts = ({ eventList }) => {
 
   return (
     <div>
-      <PieChart renderedComponents={renderedComponents}></PieChart>
+      <PieChart renderedComponents={renderedComponents}/>
       <BarChart renderedComponents={renderedComponents} />
     </div>
   );
