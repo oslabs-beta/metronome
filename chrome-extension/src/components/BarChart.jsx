@@ -1,52 +1,52 @@
 import React, { useState } from 'react';
 import Chart from 'react-apexcharts';
 
-const BarChart = (data) => {
-  // ***********************************************
-  // TODO: parse component names and render times
-  // from data prop. then sort render times into 
-  // descending order
-  // ***********************************************
+// bar chart to display component render frequencies
+const BarChart = ({ renderedComponents }) => {
+  // chart data
+  const componentNames = []; // x-axis labels
+  const renderFrequencies = []; // bar data
 
-  const componentNames = ['A', 'B', 'C']; // HARDCODED DUMMY DATA
-  const renderTimes = [10, 50, 30];  // HARDCODED DUMMY DATA
-
-  // function to add units (ms) to data points displayed 
-  // in tooltips and on the chart's bars
-  const unitFormatter = (val) => `${val} ms`;
+  // restructure data into 2D array to prepare for sorting
+  const renderedComponentsArr = Object.entries(renderedComponents);
+  // sort data in descending order by render frequency
+  renderedComponentsArr.sort((componentA, componentB) => componentB[1].numRender - componentA[1].numRender);
+  // populate chart data arrays
+  renderedComponentsArr.forEach((component) => {
+    componentNames.push(component[0]);
+    renderFrequencies.push(component[1].numRender);
+  });
 
   // configuration object for chart
   const [options, setOptions] = useState({
     title: {
-      text: 'Component Render Times',
-      align: 'center'
+      text: 'Component Render Frequencies',
+      align: 'center',
     },
     xaxis: {
       categories: componentNames,
       title: {
-        text: 'Component'
-      }
+        text: 'Component Name',
+      },
     },
     yaxis: {
       title: {
-        text: 'Render Time (ms)'
-      }
+        text: 'Render Frequency',
+      },
+      labels: {
+        formatter: (val) => val.toFixed(0), // remove decimal points from frequency values
+      },
     },
     dataLabels: {
-        formatter: unitFormatter
-      },
-    tooltip: {
-      y: {
-        formatter: unitFormatter
-      }
+      enabled: false,
     },
   });
 
-  // render time data
+  // bar data for chart
   const [series, setSeries] = useState([
     {
-      name: 'Render Time',
-      data: renderTimes
+      name: 'Render Frequency',
+      data: renderFrequencies,
     }
   ]);
 

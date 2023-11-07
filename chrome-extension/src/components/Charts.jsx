@@ -1,10 +1,13 @@
 import * as React from "react";
 import BarChart from "./BarChart";
-
+import PieChart from "./PieChart";
+import {useState, useEffect} from "react";
 const Charts = ({ eventList }) => {
   console.log("eventList in Charts", eventList);
+  // const [componentList, setComponentList] =useState({});
   const renderedComponents = {};
 
+  
   const getDescendant = (node) => {
     console.log("name of the node", node.name);
     //base case
@@ -114,6 +117,10 @@ const Charts = ({ eventList }) => {
     // console.log("final render component", renderedComponents);
   };
 
+  // useEffect((parseRender)=>{
+  //   parseRender(eventList);
+  //   setComponentList(renderedComponents);
+  // },[eventList])
   parseRender(eventList);
 
   console.log(
@@ -123,7 +130,8 @@ const Charts = ({ eventList }) => {
 
   return (
     <div>
-      <BarChart />
+      <PieChart renderedComponents={renderedComponents}></PieChart>
+      <BarChart renderedComponents={renderedComponents} />
     </div>
   );
 };
