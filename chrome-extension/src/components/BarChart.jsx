@@ -18,7 +18,7 @@ const BarChart = ({ renderedComponents }) => {
   });
 
   // configuration object for chart
-  const [options, setOptions] = useState({
+  const options={
     title: {
       text: 'Component Render Frequencies',
       align: 'center',
@@ -40,15 +40,15 @@ const BarChart = ({ renderedComponents }) => {
     dataLabels: {
       enabled: false,
     },
-  });
+  };
 
   // bar data for chart
-  const [series, setSeries] = useState([
+  const series= [
     {
       name: 'Render Frequency',
       data: renderFrequencies,
     }
-  ]);
+  ];
 
   return (
     <Chart options={options} series={series} type='bar' width={500} height={500} />
