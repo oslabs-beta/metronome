@@ -130,9 +130,8 @@ const Charts = ({ eventList }) => {
 
   return (
     <div>
-      <BarChart />
-
       <PieChart renderedComponents={renderedComponents}></PieChart>
+      <BarChart renderedComponents={renderedComponents} />
     </div>
   );
 };

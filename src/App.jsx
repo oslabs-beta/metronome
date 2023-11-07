@@ -4,32 +4,12 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
 import Logout from "./components/Logout";
-import { checkSession } from "./fetchers/userFetcher";
 import FileUpload from "./components/FileUpload";
 
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  // checks whether user has an active session or not on component loading
-  // useEffect(() => {
-  //   const checkUserSession = async () => {
-  //     try {
-  //       setIsLoading(true);
-  //       const res = await checkSession();
-  //       if (res) {
-  //         setIsLoggedIn(true);
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   checkUserSession();
-  // }, []);
 
   if (isLoading) {
     return <div>Loading...</div>;
