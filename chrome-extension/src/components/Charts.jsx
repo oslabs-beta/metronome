@@ -1,7 +1,7 @@
 import * as React from "react";
 import BarChart from "./BarChart";
 import PieChart from "./PieChart";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 const Charts = ({ eventList }) => {
   console.log("eventList in Charts", eventList);
   // const [componentList, setComponentList] =useState({});
@@ -128,8 +128,8 @@ const Charts = ({ eventList }) => {
   );
 
   return (
-    <div>
-      <PieChart renderedComponents={renderedComponents}/>
+    <div className="charts-container">
+      <PieChart renderedComponents={renderedComponents} />
       <BarChart renderedComponents={renderedComponents} />
     </div>
   );

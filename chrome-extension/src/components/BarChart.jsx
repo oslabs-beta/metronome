@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import Chart from 'react-apexcharts';
+import React, { useState } from "react";
+import Chart from "react-apexcharts";
 
 // bar chart to display component render frequencies
 const BarChart = ({ renderedComponents }) => {
@@ -10,7 +10,10 @@ const BarChart = ({ renderedComponents }) => {
   // restructure data into 2D array to prepare for sorting
   const renderedComponentsArr = Object.entries(renderedComponents);
   // sort data in descending order by render frequency
-  renderedComponentsArr.sort((componentA, componentB) => componentB[1].numRender - componentA[1].numRender);
+  renderedComponentsArr.sort(
+    (componentA, componentB) =>
+      componentB[1].numRender - componentA[1].numRender
+  );
   // populate chart data arrays
   renderedComponentsArr.forEach((component) => {
     componentNames.push(component[0]);
@@ -20,18 +23,18 @@ const BarChart = ({ renderedComponents }) => {
   // configuration object for chart
   const [options, setOptions] = useState({
     title: {
-      text: 'Component Render Frequencies',
-      align: 'center',
+      text: "Component Render Frequencies",
+      align: "center",
     },
     xaxis: {
       categories: componentNames,
       title: {
-        text: 'Component Name',
+        text: "Component Name",
       },
     },
     yaxis: {
       title: {
-        text: 'Render Frequency',
+        text: "Render Frequency",
       },
       labels: {
         formatter: (val) => val.toFixed(0), // remove decimal points from frequency values
@@ -45,13 +48,19 @@ const BarChart = ({ renderedComponents }) => {
   // bar data for chart
   const [series, setSeries] = useState([
     {
-      name: 'Render Frequency',
+      name: "Render Frequency",
       data: renderFrequencies,
-    }
+    },
   ]);
 
   return (
-    <Chart options={options} series={series} type='bar' width={500} height={500} />
+    <Chart
+      options={options}
+      series={series}
+      type="bar"
+      width={450}
+      height={450}
+    />
   );
 };
 
