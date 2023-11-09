@@ -4,6 +4,7 @@ import ComponentTree from "./ComponentTree";
 import Charts from "./Charts";
 import { useEffect, useState } from "react";
 import "../components/index.css";
+import ToggleButton from "react-toggle-button";
 
 const App = () => {
   const [idk, setIdk] = useState([]);
@@ -11,7 +12,7 @@ const App = () => {
   const [view, setView] = useState("treeView");
   //state for recording status, default to false;
   const [recStat, setRecStat] = useState(false);
-  const [recButton, setRecButton] = useState("start profiling");
+  const [recButton, setRecButton] = useState("START PROFILING");
   const [chartData, setChartData] = useState([]);
 
   const setStatus = () => {
@@ -27,13 +28,13 @@ const App = () => {
   //update recButton according to recStat
   useEffect(() => {
     if (!recStat) {
-      setRecButton("start profiling");
+      setRecButton("START PROFILING");
       sendMessageToContentScript({
         message: `Hello from popup! IT SJSIJISJISIJ ${idk.length}`,
       });
       setChartData([...idk]);
     } else {
-      setRecButton("stop profiling");
+      setRecButton("STOP PROFILING");
       sendMessageToContentScript({
         message: `Hello from popup! IT SJSIJISJISIJ ${idk.length}`,
       });
@@ -62,9 +63,23 @@ const App = () => {
   return (
     <div className="app">
       <nav>
-        <button onClick={() => setStatus()}>{recButton}</button>
-        <button onClick={() => setView("treeView")}>Component Tree</button>
-        <button onClick={() => setView("chartView")}>Charts</button>
+        <div className="toggle">
+          <button className="profile-btn" onClick={() => setStatus()}>
+            {recButton}
+          </button>
+          {/* <ToggleButton
+            value={recStat}
+            onToggle={(recStat) => {
+              setRecStat(!recStat);
+            }}
+          /> */}
+        </div>
+        <div className="ct">
+          <button onClick={() => setView("treeView")}>COMPONENT TREE</button>
+        </div>
+        <div className="ct">
+          <button onClick={() => setView("chartView")}>CHART</button>
+        </div>
       </nav>
       <div className="container">
         {view === "treeView" && (

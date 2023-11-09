@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "react-apexcharts": "^1.4.1",
-    "react-d3-tree": "^3.6.1"
+    "react-d3-tree": "^3.6.1",
+    "react-toggle-button": "^2.2.0"
   }
 }
