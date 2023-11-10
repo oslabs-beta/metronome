@@ -1,3 +1,4 @@
+<a name="readme-top"></a>
 <h1 align="center" style="display: block; font-size: 2.5em; font-weight: bold; margin-block-start: 1em; margin-block-end: 1em;">
 
 <a name="logo" href="placeholder"><img align="center" src="https://github.com/oslabs-beta/metronome/assets/88234607/101a5734-211d-42e3-9123-e63623f46ed3" alt="Metronome Logo (Home)" style="width:25%;height:25%"/></a>
@@ -37,7 +38,7 @@ Quick Links
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#what-is-metronome?">What is Metronome?</a>
+     <a href="#what-is-metronome">What is Metronome?</a>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
@@ -47,18 +48,15 @@ Quick Links
       </ul>
     </li>
     <li><a href="#features">Features</a></li>
-    <li><a href="#how-does-it-work?">How Does it Work?</a></li>
-    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#how-does-it-work">How Does it Work</a></li>
     <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#contributors">Contributors</a></li>
   </ol>
 </details>
 
 
 <!-- ABOUT THE PROJECT -->
 ## What is Metronome?
-
 
 Metronome is a tool used to better improve render times of components. Have you ever had an issue with pin pointing why a component hasn't rendered efficiently in a application? Metronome will help with honing in on what causes slow render times and go indepth on where to update the code.
 
@@ -117,28 +115,44 @@ Before we show the visualizations and charts powered by Metronome, let’s first
 
 In addition to this, Metronome determines whether a component has rendered with logic that compares the render data between the node and its children, and establishes the relationship between the current node and the overall fiber tree. It then pulls the actual duration and self based duration of each rendered component and tracks the number of times a component renders during the recorded action.
 
-![image](https://github.com/oslabs-beta/metronome/assets/88234607/ba5e15d3-b017-4e24-8b91-fff711f68f28)
+
+<p align="center">
+  <img src="https://github.com/oslabs-beta/metronome/assets/88234607/ba5e15d3-b017-4e24-8b91-fff711f68f28"  alt="Data Parsing">
+</p>
+
 
 ## Component Tree
 Metronome presents a real-time visualization of the component tree by parsing through the React Fiber Tree and presenting functional components as state and props change over time. This allows users to easily see the relationship between the components.
 
-![image](https://github.com/oslabs-beta/metronome/assets/88234607/0c40f5ef-a4a4-406b-a652-bb5265b26035)
+
+<p align="center">
+  <img src="https://github.com/oslabs-beta/metronome/assets/88234607/0c40f5ef-a4a4-406b-a652-bb5265b26035"  alt="Component Tree">
+</p>
+
 
 <p align="center"><i><sub style="font-size: 11px; color: gray;">example of a component tree rendered by Metronome</sub></i></p>
 
 Users can see the tree update in real time as components are updated in the application.
 
-![image](https://github.com/oslabs-beta/metronome/assets/88234607/a2f698b5-fddd-4678-919c-1730df22d034)
+
+<p align="center">
+  <img src="https://github.com/oslabs-beta/metronome/assets/88234607/a2f698b5-fddd-4678-919c-1730df22d034"  alt="Component Tree">
+</p>
 
 ## React Metrics
 Have you ever wondered which part of your React application is taking the longest to render? Or wondered how many times a component re-renders when you click refresh? Metronome aims to help developers analyze and troubleshoot their React applications by providing visualizations of these metrics.
 
-![image](https://github.com/oslabs-beta/metronome/assets/88234607/8d6e4a7d-4b11-4b2d-99ad-5cc793daafba)
+<p align="center">
+  <img src="https://github.com/oslabs-beta/metronome/assets/88234607/8d6e4a7d-4b11-4b2d-99ad-5cc793daafba"  alt="React Metrics">
+</p>
 
 ## Component Render Durations
 With the parsed data, Metronome compiles and displays the sum of all self-based durations for all instances that a specific component renders during a recorded action that was profiled by the user.
 
-![image](https://github.com/oslabs-beta/metronome/assets/88234607/36543aa5-f24d-451f-a367-781e024bc74b)
+
+<p align="center">
+  <img src="https://github.com/oslabs-beta/metronome/assets/88234607/36543aa5-f24d-451f-a367-781e024bc74b"  alt="Component Render Durations">
+</p>
 
 <p align="center"><i><sub style="font-size: 11px; color: gray;">example of a component tree rendered by Metronome</sub></i></p>
 
@@ -158,11 +172,14 @@ In the bar chart, Metronome ranks and displays the number of times a component h
 
 <!-- How Does It Work -->
 ## How Does It Work
-![image](https://github.com/oslabs-beta/metronome/assets/88234607/dbe4837c-dcb4-45a8-a080-3f84b7f0f3ab)
 
+<p align="center">
+  <img src="https://github.com/oslabs-beta/metronome/assets/88234607/dbe4837c-dcb4-45a8-a080-3f84b7f0f3ab"  alt="How Does It Work">
+</p>
 
-
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
@@ -171,14 +188,26 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 
 
-<!-- CONTACT -->
-## Contact
+<!-- Contributors -->
+## Contributors
 
-Bruce Onuigbo - [@your_twitter](https://twitter.com/your_username) - email@example.com
+[<img src="https://github.com/oslabs-beta/metronome/assets/88234607/fd5a0911-4348-4144-bcaf-07daf66add9b" width="100px;" alt=""/>](https://github.com/VLPUBI)
+[Vicky Liu](https://github.com/VLPUBI)
 
-Project Link: [[https://github.com/oslabs-beta/metronome](https://github.com/oslabs-beta/metronome)]
+[<img src="https://github.com/oslabs-beta/metronome/assets/88234607/021d002c-41ed-475d-a128-ee8f25657a42" width="100px;" alt=""/>](https://github.com/j9peters)
+[Jeanine Peters](https://github.com/j9peters)
+
+[<img src="https://github.com/oslabs-beta/metronome/assets/88234607/b8fe83b8-7d09-4d2a-a94d-b524358fc265" width="100px;" alt=""/>](https://github.com/mxlisandro)
+[Lisandro Olivares](https://github.com/mxlisandro)
+
+[<img src="https://github.com/oslabs-beta/metronome/assets/88234607/866a7a77-ae11-45db-a72b-e614b86b371d" width="100px;" alt=""/>](https://github.com/zsugino)
+[Zai Sugino](https://github.com/zsugino)
+
+[<img src="https://github.com/oslabs-beta/metronome/assets/88234607/cd4b2b88-91b1-4c04-a064-4e8803138efb" width="100px;" alt=""/>](https://github.com/beonuigbo)
+[Bruce Onuigbo](https://github.com/beonuigbo)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 
 
